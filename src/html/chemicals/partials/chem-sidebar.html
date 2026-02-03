@@ -1,0 +1,21 @@
+<!-- 左メニュー -->
+<div class="chem-menu">
+    <ul>
+        <li><a href="product-search.html" class="menu-item menu-link @@if(context.activePage === 'product-search'){active}"><i class="mdi mdi-test-tube me-1"></i>製品検索</a></li>
+        <li><div class="menu-item menu-category"><i class="ri-building-4-fill me-1"></i>作業場検索</div>
+            <ul>
+                <li><a href="workplace-manager-search.html" class="menu-item sub-item menu-link @@if(context.activePage === 'workplace-manager-search'){active}">管理者・作業者情報</a></li>
+                <li><a href="workplace-law.html" class="menu-item sub-item menu-link @@if(context.activePage === 'workplace-law'){active}">法律</a></li>
+                <li><a href="workplace-notice.html" class="menu-item sub-item menu-link @@if(context.activePage === 'workplace-notice'){active}">掲示物</a></li>
+            </ul>
+        </li>
+        <li><div class="menu-item menu-category"><i class="bx bx-wrench me-1"></i>メンテナンス</div>
+            <ul>
+                <li><a href="maintenance-product.html" class="menu-item sub-item menu-link @@if(context.activePage === 'maintenance-product'){active}">製品</a></li>
+                <li><a href="maintenance-workplace.html" class="menu-item sub-item menu-link @@if(context.activePage === 'maintenance-workplace'){active}">作業場</a></li>
+                <li><a href="maintenance-workplace-product.html" class="menu-item sub-item menu-link @@if(context.activePage === 'maintenance-workplace-product'){active}">作業場ー製品変更</a></li>
+                <li><a href="maintenance-authority.html" class="menu-item sub-item menu-link @@if(context.activePage === 'maintenance-authority'){active}">権限者</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>

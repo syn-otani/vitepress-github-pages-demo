@@ -1,0 +1,165 @@
+<!-- Group Register Modal -->
+<div class="modal fade" id="groupRegisterModal" tabindex="-1" aria-labelledby="groupRegisterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white py-2">
+                <h5 class="modal-title" id="groupRegisterModalLabel">
+                    <i class="ri-group-line me-2"></i>グループ登録
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3">
+                <!-- Data Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered group-register-table mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;" rowspan="2">左軸</th>
+                                <th style="width: 100px;" rowspan="2">コード No.</th>
+                                <th style="width: 180px;" rowspan="2">設備名称</th>
+                                <th style="width: 150px;" rowspan="2">機器名称</th>
+                                <th style="width: 60px;" rowspan="2">単位</th>
+                                <th colspan="3" class="text-center">スケール</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 50px;">自動</th>
+                                <th style="width: 70px;">最小</th>
+                                <th style="width: 70px;">最大</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>DLL03P09</td>
+                                <td>0</td>
+                                <td>test4</td>
+                                <td class="text-center">kWh</td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" checked></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="100"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>EC02-1</td>
+                                <td>変台 3-1 受電</td>
+                                <td>受電側電力量</td>
+                                <td class="text-center">kWh</td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" checked></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="500"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" checked></td>
+                                <td>EC02-94</td>
+                                <td>変台 3-3 No.3 動力盤</td>
+                                <td>受電側電力量</td>
+                                <td class="text-center">kWh</td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="200"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>EC02-114</td>
+                                <td>変台 3-3 No.3 電灯盤</td>
+                                <td>受電側電力量</td>
+                                <td class="text-center">kWh</td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" checked></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="300"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" checked></td>
+                                <td>EC02-94</td>
+                                <td>変台 3-3 No.3 動力盤</td>
+                                <td>受電側電力量</td>
+                                <td class="text-center">kWh</td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" checked></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="150"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>EC02-114</td>
+                                <td>変台 3-3 No.3 電灯盤</td>
+                                <td>受電側電力</td>
+                                <td class="text-center">kWh</td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="250"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>SEC0001</td>
+                                <td>部門</td>
+                                <td>てすと</td>
+                                <td class="text-center">kWh</td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" checked></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="100"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                                <td class="text-center"><input type="number" class="form-control form-control-sm" style="width: 60px;" value="0"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer py-2">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                <button type="button" class="btn btn-primary">登録</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .group-register-table {
+        font-size: 13px;
+    }
+    .group-register-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        font-size: 12px;
+        padding: 8px 6px;
+        vertical-align: middle;
+        text-align: center;
+        border: 1px solid #dee2e6;
+    }
+    .group-register-table td {
+        padding: 8px 6px;
+        vertical-align: middle;
+        border: 1px solid #dee2e6;
+    }
+    .group-register-table td.text-center {
+        text-align: center;
+    }
+    .group-register-table td.text-center input[type="number"] {
+        margin: 0 auto;
+        display: block;
+    }
+    .group-register-table tbody tr:nth-child(odd) {
+        background-color: #e7f3ff;
+    }
+    .group-register-table tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+    #groupRegisterModal .modal-header {
+        background-color: #018BD5 !important;
+    }
+    #groupRegisterModal .btn-primary {
+        background-color: #018BD5;
+        border-color: #018BD5;
+    }
+    #groupRegisterModal .btn-primary:hover {
+        background-color: #0178b8;
+        border-color: #0178b8;
+    }
+</style>

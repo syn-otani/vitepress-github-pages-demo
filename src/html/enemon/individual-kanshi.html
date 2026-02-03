@@ -1,0 +1,388 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "個別デマンド＋個別デマンド"})
+
+    @@include("partials/head-css.html")
+
+</head>
+
+<body>
+
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html", {"activePage": "individual-kanshi"})
+
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    @@include("partials/demand-page-header.html", {
+                        "icon1": "ri-slideshow-line",
+                        "title1": "個別電力監視グラフ",
+                        "icon2": "ri-slideshow-line",
+                        "title2": "個別電力監視グラフ"
+                    })
+
+                    @@include("partials/summary-card.html", {
+                        "predictedDemand": "1352",
+                        "usageRate": "77.3",
+                        "targetDemand": "1750",
+                        "maxDemand": "1632"
+                    })
+
+                    <!-- nav tabs -->
+                    <div class="card">
+                        <div class="card-header content-header">
+                            <ul class="nav nav-tabs content-tabs mb-0" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#legacyMonitor" role="tab">
+                                        <i class="ri-slideshow-line me-1"></i> 個別電力監視グラフ
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#legacyIndividual" role="tab">
+                                        <i class="ri-slideshow-line me-1"></i> 個別電力監視グラフ
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <!-- Tab 1 -->
+                                <div class="tab-pane active" id="legacyMonitor" role="tabpanel">
+                                    <!-- 個別グラフ上部のサマリー（監視タブと同書式） -->
+                                    <div class="row g-4">
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">研修室A常用受電 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">80 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">研修室B受電 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">20 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">201 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">800 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">受変電受電 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">80 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">990 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">1500 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">研修棟空調 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">181 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">300 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">ポンプ棟予備受電 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">5000 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">予備</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">5000 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tab 2 -->
+                                <div class="tab-pane" id="legacyIndividual" role="tabpanel">
+                                    <!-- 個別グラフ上部のサマリー（監視タブと同書式） -->
+                                    <div class="row g-4">
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">受変電設備負荷電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">80 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">受変電設備TR2次 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">20 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">201 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">800 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">受変電設備21F 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">80 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">990 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">1500 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">受変電設備22F 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">181 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">300 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">受変電設備23F 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">5000 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">受変電設備24F 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="mini-chart-area">
+                                                        <img src="assets/images/demand_p_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>現在</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-success"></span>予測</span>
+                                                            <span class="stat-value">0 <small>kWh</small></span>
+                                                        </div>
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-purple"></span>目標</span>
+                                                            <span class="stat-value">5000 <small>kWh</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            @@include("partials/footer.html")
+        </div>
+    </div>
+
+    @@include("partials/group-register-modal.html")
+
+    @@include("partials/vendor-scripts.html")
+    <script src="assets/js/app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var groupRegisterBtn = document.getElementById('groupRegisterBtn');
+            var groupRegisterModal = document.getElementById('groupRegisterModal');
+            if (groupRegisterBtn && groupRegisterModal) {
+                var modal = new bootstrap.Modal(groupRegisterModal);
+                groupRegisterBtn.addEventListener('click', function() {
+                    modal.show();
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,55 @@
+<!-- Summary Cards Row -->
+<div class="row mb-3">
+    <div class="col">
+        <div class="card card-summary">
+            <div class="card-body">
+                <p class="text-primary mb-1 fs-14 fw-bold">予測デマンド</p>
+                <h3 class="mb-0 text-end">
+                    <span class="text-primary fw-bold">@@predictedDemand</span>
+                    <small class="text-muted fs-14">kw</small>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card card-summary">
+            <div class="card-body">
+                <p class="text-primary mb-1 fs-14 fw-bold">予測使用率</p>
+                <div class="d-flex align-items-center">
+                    <div class="progress flex-grow-1 me-2 progress-summary">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: @@usageRate%" aria-valuenow="@@usageRate" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h3 class="mb-0">
+                        <span class="text-primary fw-bold">@@usageRate</span>
+                        <small class="text-muted fs-14">%</small>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card card-summary">
+            <div class="card-body">
+                <p class="text-primary mb-1 fs-14 fw-bold">目標デマンド</p>
+                <h3 class="mb-0 text-end">
+                    <span class="text-primary fw-bold">@@targetDemand</span>
+                    <small class="text-muted fs-14">kw</small>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card card-summary">
+            <div class="card-body">
+                <p class="text-primary mb-1 fs-14 fw-bold">当月最大デマンド</p>
+                <h3 class="mb-0 text-end">
+                    <span class="text-primary fw-bold">@@maxDemand</span>
+                    <small class="text-muted fs-14">kw</small>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-auto">
+        <button type="button" class="btn btn-primary btn-lg" id="groupRegisterBtn">グループ登録</button>
+    </div>
+</div>

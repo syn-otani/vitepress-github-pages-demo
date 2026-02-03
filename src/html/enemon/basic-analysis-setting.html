@@ -1,0 +1,967 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "原単位分析グラフ表示設定"})
+
+    @@include("partials/head-css.html")
+
+    <style>
+        /* Custom styles for analysis page */
+        .group-select {
+            background-color: #0d99ff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .group-select:focus {
+            background-color: #0d99ff;
+            color: white;
+            box-shadow: none;
+        }
+        .group-select option {
+            background-color: white;
+            color: #212529;
+        }
+        .copy-option {
+            background-color: white;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin: 0 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+        }
+        .copy-option:has(input:checked) {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+        .copy-option input[type="radio"] {
+            cursor: pointer;
+        }
+        .copy-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .copy-button:hover {
+            background-color: #5a6268;
+            color: white;
+        }
+        .detail-setting-label {
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .detail-toggle-label {
+            color: #6c757d;
+            font-size: 12px;
+            font-weight: 400;
+        }
+        .analysis-table {
+            font-size: 13px;
+        }
+        .analysis-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 8px 6px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .analysis-table td {
+            padding: 8px 6px;
+            vertical-align: middle;
+            border: 1px solid #dee2e6;
+        }
+        .analysis-table td.text-center {
+            text-align: center;
+        }
+        .analysis-table td.text-center input[type="number"] {
+            margin: 0 auto;
+            display: block;
+        }
+        .analysis-table tbody tr:nth-child(odd) {
+            background-color: #e7f3ff;
+        }
+        .group-label-cell {
+            background-color: #f8f9fa !important;
+            font-weight: 600;
+            text-align: center;
+            vertical-align: middle;
+            padding: 8px 4px;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        .line-indicator {
+            display: inline-block;
+            width: 30px;
+            height: 3px;
+            vertical-align: middle;
+        }
+        .date-input-group {
+            background-color: #495057;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+        .period-dropdown {
+            background-color: #495057;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html")
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Left: Page Title with Icon -->
+                            <div class="d-flex align-items-center">
+                                <i class="ri-settings-3-line me-2 fs-20 text-primary"></i>
+                                <h5 class="page-title mb-0">原単位分析グラフ表示設定</h5>
+                            </div>
+                            <!-- Right: Alert Buttons -->
+                            <div class="d-flex align-items-center page-alerts">
+                                <i class="bx bxs-volume-full me-3 volume-icon"></i>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-1">1段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-2">2段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-high">高負荷警報</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-disable">調整不能</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header content-header">
+                                    <!-- Graph Tabs -->
+                                    <ul class="nav nav-tabs content-tabs mb-0" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#dayGraph" role="tab">
+                                                <i class="ri-calendar-line me-1"></i> 日グラフ
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#monthGraph" role="tab">
+                                                <i class="ri-calendar-2-line me-1"></i> 月グラフ
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#yearGraph" role="tab">
+                                                <i class="ri-calendar-check-line me-1"></i> 年グラフ
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <!-- 日グラフ Tab -->
+                                        <div class="tab-pane active" id="dayGraph" role="tabpanel">
+                                            <!-- Controls Row -->
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-3">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                        <input type="text" class="form-control form-control-sm" style="width: 130px;"  value="グループ 01">
+                                                    </div>
+                                                </div>
+
+                                                <!-- Center: Copy Settings -->
+                                                <div class="col-md-6 text-center">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ項目コピー</span>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopy" value="month2day" class="me-1">
+                                                            月グラフ→日グラフ
+                                                        </label>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopy" value="year2day" class="me-1">
+                                                            年グラフ→日グラフ
+                                                        </label>
+                                                        <button type="button" class="copy-button ms-3">コピー</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Data Table -->
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 60px;" rowspan="2"></th>
+                                                            <th style="width: 60px;" rowspan="2">種別</th>
+                                                            <th style="width: 50px;" rowspan="2">ライン</th>
+                                                            <th style="width: 110px;" rowspan="2">コード No.</th>
+                                                            <th style="width: 120px;" rowspan="2">設備名称</th>
+                                                            <th style="width: 120px;" rowspan="2">機器名称</th>
+                                                            <th style="width: 55px;" rowspan="2">単位</th>
+                                                            <th style="width: 60px;" rowspan="2">集計<br>種別</th>
+                                                            <th style="width: 70px;" rowspan="2">グラフ</th>
+                                                            <th colspan="3">スケール</th>
+                                                            <th style="width: 85px;" rowspan="2">目標ライン</th>
+                                                            <th style="width: 120px;" rowspan="2">詳細グラフ</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 50px;">自動</th>
+                                                            <th style="width: 60px;">最小</th>
+                                                            <th style="width: 60px;">最大</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="group-label-cell" rowspan="3">《計測》</td>
+                                                            <td class="text-center">使用量</td>
+                                                            <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-1">
+                                                                    <input type="text" class="form-control form-control-sm" value="PI0001">
+                                                                    <i class="ri-file-copy-line" style="cursor: pointer;"></i>
+                                                                </div>
+                                                            </td>
+                                                            <td>受変電</td>
+                                                            <td>受電 電力量</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td class="text-center" rowspan="3">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center">折線</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">生産量</td>
+                                                            <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-1">
+                                                                    <input type="text" class="form-control form-control-sm" value="CAL0001">
+                                                                    <i class="ri-file-copy-line" style="cursor: pointer;"></i>
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                            <td>生産数</td>
+                                                            <td class="text-center">PC</td>
+                                                            <td class="text-center">棒</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>原単位率</td>
+                                                            <td class="text-center">kWh/PC</td>
+                                                            <td class="text-center">折線</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0.5" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 60px;" rowspan="2"></th>
+                                                        <th style="width: 60px;" rowspan="2">種別</th>
+                                                        <th style="width: 50px;" rowspan="2">ライン</th>
+                                                        <th style="width: 110px;" rowspan="2">コード No.</th>
+                                                        <th style="width: 120px;" rowspan="2">設備名称</th>
+                                                        <th style="width: 120px;" rowspan="2">機器名称</th>
+                                                        <th style="width: 55px;" rowspan="2">単位</th>
+                                                        <th style="width: 60px;" rowspan="2">集計<br>種別</th>
+                                                        <th style="width: 70px;" rowspan="2">グラフ</th>
+                                                        <th colspan="3">スケール</th>
+                                                        <th style="width: 85px;" rowspan="2">目標ライン</th>
+                                                        <th style="width: 120px;" rowspan="2">詳細グラフ</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 50px;">自動</th>
+                                                        <th style="width: 60px;">最小</th>
+                                                        <th style="width: 60px;">最大</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="group-label-cell" rowspan="3">《積上》</td>
+                                                        <td class="text-center">使用量</td>
+                                                        <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                        <td>PI0001 </td>
+                                                        <td>受変電</td>
+                                                        <td>受電 電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td class="text-center" rowspan="3">合計</td>
+                                                        <td class="text-center">折線</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">生産量</td>
+                                                        <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                        <td>CAL0001</td>
+                                                        <td></td>
+                                                        <td>生産数</td>
+                                                        <td class="text-center">PC</td>
+                                                        <td class="text-center">棒</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>原単位率</td>
+                                                        <td class="text-center">kWh/PC</td>
+                                                        <td class="text-center">折線</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                            <!-- Bottom Controls -->
+                                            <div class="row mt-4">
+                                                <div class="col-md-6">
+                                                    <div class="d-flex gap-2">
+                                                        <button type="button" class="btn btn-secondary">削除</button>
+                                                        <button type="button" class="btn btn-secondary">登録</button>
+                                                        <button type="button" class="btn btn-outline-secondary">キャンセル</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-end align-items-center gap-2">
+                                                        <span class="me-2">グラフ表示期間</span>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <span class="mx-2">-</span>
+                                                        <select class="period-dropdown">
+                                                            <option value="2">2日</option>
+                                                            <option value="3">3日</option>
+                                                            <option value="7">7日</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-secondary ms-2">グラフ表示</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 月グラフ Tab -->
+                                        <div class="tab-pane" id="monthGraph" role="tabpanel">
+                                            <!-- Controls Row -->
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-3">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                        <input type="text" class="form-control form-control-sm" style="width: 130px;"  value="グループ 01">
+                                                    </div>
+                                                </div>
+
+                                                <!-- Center: Copy Settings -->
+                                                <div class="col-md-6 text-center">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ項目コピー</span>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopyMonth" value="month2day" class="me-1">
+                                                            月グラフ→日グラフ
+                                                        </label>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopyMonth" value="year2day" class="me-1">
+                                                            年グラフ→日グラフ
+                                                        </label>
+                                                        <button type="button" class="copy-button ms-3">コピー</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Data Table -->
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 60px;" rowspan="2"></th>
+                                                            <th style="width: 60px;" rowspan="2">種別</th>
+                                                            <th style="width: 50px;" rowspan="2">ライン</th>
+                                                            <th style="width: 110px;" rowspan="2">コード No.</th>
+                                                            <th style="width: 120px;" rowspan="2">設備名称</th>
+                                                            <th style="width: 120px;" rowspan="2">機器名称</th>
+                                                            <th style="width: 55px;" rowspan="2">単位</th>
+                                                            <th style="width: 60px;" rowspan="2">集計<br>種別</th>
+                                                            <th style="width: 70px;" rowspan="2">グラフ</th>
+                                                            <th colspan="3">スケール</th>
+                                                            <th style="width: 85px;" rowspan="2">目標ライン</th>
+                                                            <th style="width: 120px;" rowspan="2">詳細グラフ</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 50px;">自動</th>
+                                                            <th style="width: 60px;">最小</th>
+                                                            <th style="width: 60px;">最大</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="group-label-cell" rowspan="3">《計測》</td>
+                                                            <td class="text-center">使用量</td>
+                                                            <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-1">
+                                                                    <input type="text" class="form-control form-control-sm" value="PI0001">
+                                                                    <i class="ri-file-copy-line" style="cursor: pointer;"></i>
+                                                                </div>
+                                                            </td>
+                                                            <td>受変電</td>
+                                                            <td>受電 電力量</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td class="text-center" rowspan="3">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center">折線</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">生産量</td>
+                                                            <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-1">
+                                                                    <input type="text" class="form-control form-control-sm" value="CAL0001">
+                                                                    <i class="ri-file-copy-line" style="cursor: pointer;"></i>
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                            <td>生産数</td>
+                                                            <td class="text-center">PC</td>
+                                                            <td class="text-center">棒</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>原単位率</td>
+                                                            <td class="text-center">kWh/PC</td>
+                                                            <td class="text-center">折線</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0.5" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 60px;" rowspan="2"></th>
+                                                        <th style="width: 60px;" rowspan="2">種別</th>
+                                                        <th style="width: 50px;" rowspan="2">ライン</th>
+                                                        <th style="width: 110px;" rowspan="2">コード No.</th>
+                                                        <th style="width: 120px;" rowspan="2">設備名称</th>
+                                                        <th style="width: 120px;" rowspan="2">機器名称</th>
+                                                        <th style="width: 55px;" rowspan="2">単位</th>
+                                                        <th style="width: 60px;" rowspan="2">集計<br>種別</th>
+                                                        <th style="width: 70px;" rowspan="2">グラフ</th>
+                                                        <th colspan="3">スケール</th>
+                                                        <th style="width: 85px;" rowspan="2">目標ライン</th>
+                                                        <th style="width: 120px;" rowspan="2">詳細グラフ</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 50px;">自動</th>
+                                                        <th style="width: 60px;">最小</th>
+                                                        <th style="width: 60px;">最大</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="group-label-cell" rowspan="3">《積上》</td>
+                                                        <td class="text-center">使用量</td>
+                                                        <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                        <td>PI0001 </td>
+                                                        <td>受変電</td>
+                                                        <td>受電 電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td class="text-center" rowspan="3">合計</td>
+                                                        <td class="text-center">折線</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">生産量</td>
+                                                        <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                        <td>CAL0001</td>
+                                                        <td></td>
+                                                        <td>生産数</td>
+                                                        <td class="text-center">PC</td>
+                                                        <td class="text-center">棒</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>原単位率</td>
+                                                        <td class="text-center">kWh/PC</td>
+                                                        <td class="text-center">折線</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                            <!-- Bottom Controls -->
+                                            <div class="row mt-4">
+                                                <div class="col-md-6">
+                                                    <div class="d-flex gap-2">
+                                                        <button type="button" class="btn btn-secondary">削除</button>
+                                                        <button type="button" class="btn btn-secondary">登録</button>
+                                                        <button type="button" class="btn btn-outline-secondary">キャンセル</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-end align-items-center gap-2">
+                                                        <span class="me-2">グラフ表示期間</span>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <span class="mx-2">-</span>
+                                                        <select class="period-dropdown">
+                                                            <option value="2">2日</option>
+                                                            <option value="3">3日</option>
+                                                            <option value="7">7日</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-secondary ms-2">グラフ表示</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 年グラフ Tab -->
+                                        <div class="tab-pane" id="yearGraph" role="tabpanel">
+                                            <!-- Controls Row -->
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-3">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                        <input type="text" class="form-control form-control-sm" style="width: 130px;"  value="グループ 01">
+                                                    </div>
+                                                </div>
+
+                                                <!-- Center: Copy Settings -->
+                                                <div class="col-md-6 text-center">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ項目コピー</span>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopyYear" value="month2day" class="me-1">
+                                                            月グラフ→日グラフ
+                                                        </label>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopyYear" value="year2day" class="me-1">
+                                                            年グラフ→日グラフ
+                                                        </label>
+                                                        <button type="button" class="copy-button ms-3">コピー</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Data Table -->
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 60px;" rowspan="2"></th>
+                                                            <th style="width: 60px;" rowspan="2">種別</th>
+                                                            <th style="width: 50px;" rowspan="2">ライン</th>
+                                                            <th style="width: 110px;" rowspan="2">コード No.</th>
+                                                            <th style="width: 120px;" rowspan="2">設備名称</th>
+                                                            <th style="width: 120px;" rowspan="2">機器名称</th>
+                                                            <th style="width: 55px;" rowspan="2">単位</th>
+                                                            <th style="width: 60px;" rowspan="2">集計<br>種別</th>
+                                                            <th style="width: 70px;" rowspan="2">グラフ</th>
+                                                            <th colspan="3">スケール</th>
+                                                            <th style="width: 85px;" rowspan="2">目標ライン</th>
+                                                            <th style="width: 120px;" rowspan="2">詳細グラフ</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 50px;">自動</th>
+                                                            <th style="width: 60px;">最小</th>
+                                                            <th style="width: 60px;">最大</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="group-label-cell" rowspan="3">《計測》</td>
+                                                            <td class="text-center">使用量</td>
+                                                            <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-1">
+                                                                    <input type="text" class="form-control form-control-sm" value="PI0001">
+                                                                    <i class="ri-file-copy-line" style="cursor: pointer;"></i>
+                                                                </div>
+                                                            </td>
+                                                            <td>受変電</td>
+                                                            <td>受電 電力量</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td class="text-center" rowspan="3">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center">折線</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">生産量</td>
+                                                            <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-1">
+                                                                    <input type="text" class="form-control form-control-sm" value="CAL0001">
+                                                                    <i class="ri-file-copy-line" style="cursor: pointer;"></i>
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                            <td>生産数</td>
+                                                            <td class="text-center">PC</td>
+                                                            <td class="text-center">棒</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>原単位率</td>
+                                                            <td class="text-center">kWh/PC</td>
+                                                            <td class="text-center">折線</td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0.5" step="0.1">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option></option>
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 60px;" rowspan="2"></th>
+                                                        <th style="width: 60px;" rowspan="2">種別</th>
+                                                        <th style="width: 50px;" rowspan="2">ライン</th>
+                                                        <th style="width: 110px;" rowspan="2">コード No.</th>
+                                                        <th style="width: 120px;" rowspan="2">設備名称</th>
+                                                        <th style="width: 120px;" rowspan="2">機器名称</th>
+                                                        <th style="width: 55px;" rowspan="2">単位</th>
+                                                        <th style="width: 60px;" rowspan="2">集計<br>種別</th>
+                                                        <th style="width: 70px;" rowspan="2">グラフ</th>
+                                                        <th colspan="3">スケール</th>
+                                                        <th style="width: 85px;" rowspan="2">目標ライン</th>
+                                                        <th style="width: 120px;" rowspan="2">詳細グラフ</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 50px;">自動</th>
+                                                        <th style="width: 60px;">最小</th>
+                                                        <th style="width: 60px;">最大</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="group-label-cell" rowspan="3">《積上》</td>
+                                                        <td class="text-center">使用量</td>
+                                                        <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                        <td>PI0001 </td>
+                                                        <td>受変電</td>
+                                                        <td>受電 電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td class="text-center" rowspan="3">合計</td>
+                                                        <td class="text-center">折線</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">生産量</td>
+                                                        <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                        <td>CAL0001</td>
+                                                        <td></td>
+                                                        <td>生産数</td>
+                                                        <td class="text-center">PC</td>
+                                                        <td class="text-center">棒</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>原単位率</td>
+                                                        <td class="text-center">kWh/PC</td>
+                                                        <td class="text-center">折線</td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 65px;" value="0" step="0.1">
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                            <!-- Bottom Controls -->
+                                            <div class="row mt-4">
+                                                <div class="col-md-6">
+                                                    <div class="d-flex gap-2">
+                                                        <button type="button" class="btn btn-secondary">削除</button>
+                                                        <button type="button" class="btn btn-secondary">登録</button>
+                                                        <button type="button" class="btn btn-outline-secondary">キャンセル</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-end align-items-center gap-2">
+                                                        <span class="me-2">グラフ表示期間</span>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <span class="mx-2">-</span>
+                                                        <select class="period-dropdown">
+                                                            <option value="2">2日</option>
+                                                            <option value="3">3日</option>
+                                                            <option value="7">7日</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-secondary ms-2">グラフ表示</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            @@include("partials/footer.html")
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    @@include("partials/vendor-scripts.html")
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>
+

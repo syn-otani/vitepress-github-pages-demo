@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>製品検索 | 化学物質管理システム</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="化学物質管理システム" name="description">
+    <meta content="ADIS" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- Icons Css -->
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- App Css -->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom Css -->
+    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="chem-container">
+    @@include("partials/chem-header.html")
+    <!-- ボディ(左メニュー＋メインパネル) -->
+    <div class="chem-body">
+        @@include("partials/chem-sidebar.html", {"activePage": "product-search"})
+        <!-- メインパネル -->
+        <div class="chem-main">
+            <div class="page-title-box">
+                <h4 class="mb-0">製品検索</h4>
+            </div>
+
+            <div class="chem-grid-container">
+                <div class="chem-top card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">検索条件</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap align-items-start gap-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <label class="form-label mb-0 text-nowrap" for="product-name">製品名</label>
+                                <input class="form-control" type="text" id="product-name" name="product-name">
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <label class="form-label mb-0 text-nowrap">SDS発行・更新年</label>
+                                <select class="form-select" id="sds-date-from">
+                                    <option value="">選択してください</option>
+                                    <option value="2020">2020年</option>
+                                    <option value="2021">2021年</option>
+                                    <option value="2022">2022年</option>
+                                    <option value="2023">2023年</option>
+                                    <option value="2024">2024年</option>
+                                    <option value="2025">2025年</option>
+                                    <option value="2026">2026年</option>
+                                </select>
+                                <span>～</span>
+                                <select class="form-select" id="sds-date-to">
+                                    <option value="">選択してください</option>
+                                    <option value="2020">2020年</option>
+                                    <option value="2021">2021年</option>
+                                    <option value="2022">2022年</option>
+                                    <option value="2023">2023年</option>
+                                    <option value="2024">2024年</option>
+                                    <option value="2025">2025年</option>
+                                    <option value="2026">2026年</option>
+                                </select>
+                            </div>
+                            <!-- 検索・クリアボタン -->
+                            <div class="col-auto ms-auto align-self-end d-flex gap-2">
+                                <button class="btn btn-chem" id="searchBtn">
+                                    <i class="ri-search-line me-1"></i>検索
+                                </button>
+                                <button class="btn btn-chem" id="clearBtn">
+                                    <i class="ri-refresh-line me-1"></i>クリア
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chem-bottom card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">検索結果</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-end mb-2">
+                            <button class="btn btn-chem">
+                                <i class="ri-file-download-line me-1"></i>CSV出力
+                            </button>
+                        </div>
+                        <div class="table-wrapper">
+                        <div class="table-header">
+                        <table class="table table-bordered align-middle mb-0">
+                            <colgroup>
+                                <col style="width: 12em;">
+                                <col style="width: 10em;">
+                                <col style="width: 9em;">
+                                <col style="width: 5em;">
+                                <col style="width: 7em;">
+                                <col style="width: 7em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 8em;">
+                            </colgroup>
+                            <thead class="table-light">
+                            <tr>
+                                <th rowspan="2">製品名称</th>
+                                <th rowspan="2">製造会社</th>
+                                <th rowspan="2">SDS発行・更新日</th>
+                                <th rowspan="2">ラベル</th>
+                                <th rowspan="2" style="font-size: 10pt;">リスクアセスメント対象物</th>
+                                <th rowspan="2" style="font-size: 10pt;">濃度基準値設定物質</th>
+                                <th colspan="2" class="th-compact" style="font-size: 10pt;">皮膚など障害化学物質</th>
+                                <th rowspan="2">作業記録</th>
+                                <th rowspan="2">特殊検診</th>
+                                <th rowspan="2">作業環境<br>測定</th>
+                                <th rowspan="2">使用部門</th>
+                            </tr>
+                            <tr>
+                                <th class="th-compact" style="font-size: 9pt;">皮膚</th>
+                                <th class="th-compact" style="font-size: 9pt;">眼</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        </div>
+                        <div class="table-body">
+                        <table class="table table-bordered table-striped table-hover align-middle mb-0" id="resultTable">
+                            <colgroup>
+                                <col style="width: 12em;">
+                                <col style="width: 10em;">
+                                <col style="width: 9em;">
+                                <col style="width: 5em;">
+                                <col style="width: 7em;">
+                                <col style="width: 7em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 8em;">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">アセトン溶剤A</a></td>
+                                <td>東洋化学工業</td>
+                                <td>2025年8月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">T製</a> <a href="#" class="text-decoration-underline">C製</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">トルエン希釈剤</a></td>
+                                <td>日本塗料</td>
+                                <td>2024年3月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">T製</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">エタノール消毒液</a></td>
+                                <td>関西薬品</td>
+                                <td>2023年11月</td>
+                                <td class="text-center">無</td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td><a href="#" class="text-decoration-underline">R部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">メチルエチルケトン</a></td>
+                                <td>中央化成</td>
+                                <td>2022年6月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">C製</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">イソプロピルアルコール</a></td>
+                                <td>山陽ケミカル</td>
+                                <td>2021年9月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td><a href="#" class="text-decoration-underline">モールド</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">キシレン混合液</a></td>
+                                <td>北陸化学</td>
+                                <td>2025年1月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">T製</a> <a href="#" class="text-decoration-underline">S部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">酢酸エチル</a></td>
+                                <td>西日本化成</td>
+                                <td>2020年4月</td>
+                                <td class="text-center">無</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">ヘキサン溶剤</a></td>
+                                <td>東海化学工業</td>
+                                <td>2024年7月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">C製</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">ジクロロメタン</a></td>
+                                <td>九州薬品工業</td>
+                                <td>2023年2月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">R部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">テトラヒドロフラン</a></td>
+                                <td>中部化学</td>
+                                <td>2025年5月</td>
+                                <td class="text-center">無</td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td><a href="#" class="text-decoration-underline">M部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">クロロホルム</a></td>
+                                <td>東北化学</td>
+                                <td>2022年10月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">T製</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">シンナーS-100</a></td>
+                                <td>日新塗料</td>
+                                <td>2024年12月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">T製</a> <a href="#" class="text-decoration-underline">C製</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">ベンゼン試薬</a></td>
+                                <td>四国化学</td>
+                                <td>2021年3月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">R部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">ホルムアルデヒド</a></td>
+                                <td>北海道化成</td>
+                                <td>2023年8月</td>
+                                <td class="text-center">無</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td><a href="#" class="text-decoration-underline">S部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">スチレンモノマー</a></td>
+                                <td>関東樹脂工業</td>
+                                <td>2025年2月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">モールド</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">塩化メチレン</a></td>
+                                <td>信越化学</td>
+                                <td>2020年11月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">C製</a> <a href="#" class="text-decoration-underline">M部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">過酸化水素水</a></td>
+                                <td>沖縄化学工業</td>
+                                <td>2024年5月</td>
+                                <td class="text-center">無</td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td><a href="#" class="text-decoration-underline">R部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">硫酸溶液</a></td>
+                                <td>東京化学</td>
+                                <td>2022年1月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">T製</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">塩酸希釈液</a></td>
+                                <td>大阪薬品</td>
+                                <td>2023年6月</td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">有</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td><a href="#" class="text-decoration-underline">S部門</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-decoration-underline">水酸化ナトリウム</a></td>
+                                <td>名古屋化学</td>
+                                <td>2025年9月</td>
+                                <td class="text-center">無</td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"><a href="#" class="text-decoration-underline">○</a></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @@include("partials/chem-footer.html")
+</div>
+
+<script>
+    // テーブル行クリックでハイライト
+    const table = document.getElementById('resultTable');
+    const tbody = table.querySelector('tbody');
+    tbody.addEventListener('click', function(e) {
+        const row = e.target.closest('tr');
+        if (row) {
+            tbody.querySelectorAll('tr').forEach(tr => {
+                tr.classList.remove('table-active');
+            });
+            row.classList.add('table-active');
+        }
+    });
+
+    // クリアボタン
+    document.getElementById('clearBtn').addEventListener('click', function() {
+        document.getElementById('product-name').value = '';
+        document.getElementById('sds-date-from').value = '';
+        document.getElementById('sds-date-to').value = '';
+    });
+
+    // 検索ボタン
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        // TODO: 検索処理
+        alert('検索を実行します');
+    });
+</script>
+
+</body>
+</html>

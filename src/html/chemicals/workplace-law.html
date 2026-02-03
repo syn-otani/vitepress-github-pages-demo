@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>作業場検索－法律 | 化学物質管理システム</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="化学物質管理システム" name="description">
+    <meta content="ADIS" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- Icons Css -->
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- App Css -->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom Css -->
+    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="chem-container">
+    @@include("partials/chem-header.html")
+    <!-- ボディ(左メニュー＋メインパネル) -->
+    <div class="chem-body">
+        @@include("partials/chem-sidebar.html", {"activePage": "workplace-law"})
+        <!-- メインパネル -->
+        <div class="chem-main">
+            <div class="page-title-box">
+                <h4 class="mb-0">作業場検索－法律</h4>
+            </div>
+
+            <div class="chem-grid-container">
+                <div class="chem-top card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">検索条件</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap align-items-start gap-3">
+                            <!-- 左側: 入力フィールド -->
+                            <div class="d-flex flex-column gap-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <label class="form-label mb-0 text-nowrap" style="width: 4em;" for="unit-choice">部門</label>
+                                    <select class="form-select" id="unit-choice">
+                                        <option value="">選択ボックス</option>
+                                        <option value="T製">T製</option>
+                                        <option value="M部門">M部門</option>
+                                        <option value="R部門">R部門</option>
+                                        <option value="S部門">S部門</option>
+                                    </select>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <label class="form-label mb-0 text-nowrap" style="width: 4em;" for="workplace-choice">作業場</label>
+                                    <select class="form-select" id="workplace-choice">
+                                        <option value="">選択ボックス</option>
+                                        <option value="塗装A">塗装A</option>
+                                        <option value="塗装B">塗装B</option>
+                                        <option value="塗装C">塗装C</option>
+                                        <option value="塗装D">塗装D</option>
+                                    </select>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <label class="form-label mb-0 text-nowrap" style="width: 4em;" for="product-name">製品名</label>
+                                    <input class="form-control" type="text" id="product-name" placeholder="自由入力">
+                                </div>
+                            </div>
+                            <!-- 中央: リスクアセスメント + リスクレベル -->
+                            <div class="col-auto d-flex flex-column gap-2">
+                                <!-- 上段: リスクアセスメント対象物 -->
+                                <div class="border p-2">
+                                    <div class="d-flex gap-3">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" id="chk-risk">
+                                            <label class="form-check-label" for="chk-risk">リスクアセスメント対象物</label>
+                                        </div>
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" id="chk-concentration">
+                                            <label class="form-check-label" for="chk-concentration">濃度基準値設定物質</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-3">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" id="chk-skin">
+                                            <label class="form-check-label" for="chk-skin">皮膚など障害化学物質</label>
+                                        </div>
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" id="chk-record">
+                                            <label class="form-check-label" for="chk-record">作業記録</label>
+                                        </div>
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" id="chk-health">
+                                            <label class="form-check-label" for="chk-health">特殊健診</label>
+                                        </div>
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" id="chk-env">
+                                            <label class="form-check-label" for="chk-env">作業環境測定</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 下段: 吸入+経皮 と 爆発火災等 を横並び -->
+                                <div class="d-flex gap-2">
+                                    <!-- 吸入+経皮 -->
+                                    <div class="border p-2">
+                                        <div class="text-nowrap mb-1">リスクレベル（吸入+経皮）</div>
+                                        <div class="d-flex gap-2">
+                                            <div class="form-check form-check-inline mb-0">
+                                                <input class="form-check-input" type="checkbox" id="risk1-1">
+                                                <label class="form-check-label" for="risk1-1">I</label>
+                                            </div>
+                                            <div class="form-check form-check-inline mb-0">
+                                                <input class="form-check-input" type="checkbox" id="risk1-2">
+                                                <label class="form-check-label" for="risk1-2">II</label>
+                                            </div>
+                                            <div class="form-check form-check-inline mb-0">
+                                                <input class="form-check-input" type="checkbox" id="risk1-3">
+                                                <label class="form-check-label" for="risk1-3">III</label>
+                                            </div>
+                                            <div class="form-check form-check-inline mb-0">
+                                                <input class="form-check-input" type="checkbox" id="risk1-4">
+                                                <label class="form-check-label" for="risk1-4">IV</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 爆発火災等 -->
+                                    <div class="border p-2">
+                                        <div class="text-nowrap mb-1">リスクレベル（爆発火災等）</div>
+                                        <div class="d-flex gap-2">
+                                            <div class="form-check form-check-inline mb-0">
+                                                <input class="form-check-input" type="checkbox" id="risk2-1">
+                                                <label class="form-check-label" for="risk2-1">I</label>
+                                            </div>
+                                            <div class="form-check form-check-inline mb-0">
+                                                <input class="form-check-input" type="checkbox" id="risk2-2">
+                                                <label class="form-check-label" for="risk2-2">II</label>
+                                            </div>
+                                            <div class="form-check form-check-inline mb-0">
+                                                <input class="form-check-input" type="checkbox" id="risk2-3">
+                                                <label class="form-check-label" for="risk2-3">III</label>
+                                            </div>
+                                            <div class="form-check form-check-inline mb-0">
+                                                <input class="form-check-input" type="checkbox" id="risk2-4">
+                                                <label class="form-check-label" for="risk2-4">IV</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 右側: 濃度基準値判定 + ばく露低減措置 -->
+                            <div class="col-auto d-flex flex-column gap-2">
+                                <!-- 濃度基準値判定 -->
+                                <div class="border p-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="text-nowrap">濃度基準値判定</span>
+                                        <select class="form-select form-select-sm" id="concentration-judgment" style="width: auto;">
+                                            <option value="">選択してください</option>
+                                            <option value="1">1/2以上基準値未満</option>
+                                            <option value="2">基準値以上</option>
+                                            <option value="3">1/2未満</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- ばく露低減措置検討要否 -->
+                                <div class="border p-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="text-nowrap">ばく露低減措置<br>検討要否</span>
+                                        <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="checkbox" id="exposure-required">
+                                            <label class="form-check-label" for="exposure-required">要</label>
+                                        </div>
+                                        <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="checkbox" id="exposure-not-required">
+                                            <label class="form-check-label" for="exposure-not-required">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 検索・クリアボタン -->
+                            <div class="col-auto ms-auto align-self-end d-flex gap-2">
+                                <button class="btn btn-chem" id="searchBtn">
+                                    <i class="ri-search-line me-1"></i>検索
+                                </button>
+                                <button class="btn btn-chem" id="clearBtn">
+                                    <i class="ri-refresh-line me-1"></i>クリア
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chem-bottom card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">検索結果</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <div>
+                                <div class="toggle-btn-group">
+                                    <span class="toggle-btn active" id="viewModeBtn">表示</span>
+                                    <span class="toggle-btn" id="editModeBtn">編集</span>
+                                </div>
+                            </div>
+                            <div class="csv-btn-wrapper">
+                                <button class="btn btn-chem">
+                                    <i class="ri-file-download-line me-1"></i>CSV出力
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-wrapper" id="tableWrapper">
+                        <div class="table-header">
+                        <table class="table table-bordered align-middle mb-0">
+                            <colgroup>
+                                <col style="width: 3.5em;">
+                                <col style="width: 4em;">
+                                <col style="width: 3em;">
+                                <col style="width: 5em;">
+                                <col style="width: 3em;">
+                                <col style="width: 4em;">
+                                <col style="width: 4.5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 4.5em;">
+                                <col style="width: 5.5em;">
+                                <col style="width: 4.5em;">
+                                <col style="width: 6em;">
+                                <col style="width: 3em;">
+                                <col style="width: 3em;">
+                                <col style="width: 4em;">
+                                <col style="width: 4em;">
+                                <col style="width: 4em;">
+                            </colgroup>
+                            <thead class="table-light" style="font-size: 10pt;">
+                            <tr>
+                                <th rowspan="2">部門</th>
+                                <th rowspan="2">作業場</th>
+                                <th rowspan="2">屋内／屋外</th>
+                                <th rowspan="2">製品名称</th>
+                                <th rowspan="2">常時／臨時</th>
+                                <th rowspan="2">使用目的</th>
+                                <th rowspan="2">リスクアセスメント対象物</th>
+                                <th rowspan="2">リスクアセスメント結果</th>
+                                <th colspan="2" class="th-compact">リスクレベル</th>
+                                <th rowspan="2">ばく露低減措置検討要否</th>
+                                <th rowspan="2">ばく露状況報告書</th>
+                                <th rowspan="2">濃度基準値設定物質</th>
+                                <th rowspan="2">濃度基準値判定</th>
+                                <th colspan="2" class="th-compact">皮膚など障害化学物質</th>
+                                <th rowspan="2">作業記録</th>
+                                <th rowspan="2">特殊検診</th>
+                                <th rowspan="2">作業環境測定</th>
+                            </tr>
+                            <tr style="font-size: 9pt;">
+                                <th class="th-compact">吸入+経皮</th>
+                                <th class="th-compact">爆発火災等</th>
+                                <th class="th-compact">皮膚</th>
+                                <th class="th-compact">眼</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        </div>
+                        <div class="table-body">
+                        <table class="table table-bordered table-striped table-hover align-middle mb-0" id="resultTable">
+                            <colgroup>
+                                <col style="width: 3.5em;">
+                                <col style="width: 4em;">
+                                <col style="width: 3em;">
+                                <col style="width: 5em;">
+                                <col style="width: 3em;">
+                                <col style="width: 4em;">
+                                <col style="width: 4.5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 5em;">
+                                <col style="width: 4.5em;">
+                                <col style="width: 5.5em;">
+                                <col style="width: 4.5em;">
+                                <col style="width: 6em;">
+                                <col style="width: 3em;">
+                                <col style="width: 3em;">
+                                <col style="width: 4em;">
+                                <col style="width: 4em;">
+                                <col style="width: 4em;">
+                            </colgroup>
+                            <tbody>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装A</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品A</a></td><td>常時</td><td>塗装</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書1</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上" selected>1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装A</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品B</a></td><td>常時</td><td>塗装</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書2</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上" selected>1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center"></td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装B</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品C</a></td><td>常時</td><td>塗装</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書3</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上" selected>1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center"></td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装C</td><td>屋外</td><td><a href="#" class="text-decoration-underline">製品D</a></td><td>臨時</td><td>塗装</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center"></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満" selected>1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center"></td><td class="text-center">○</td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装D</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品E</a></td><td>常時</td><td>洗浄</td><td class="text-center"></td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I" selected>I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I" selected>I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center"></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="" selected>-</option><option value="1/2未満">1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">M部門</a></td><td>検査室</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品F</a></td><td>常時</td><td>検査</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I" selected>I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満" selected>1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center"></td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">M部門</a></td><td>品質管理</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品G</a></td><td>常時</td><td>試験</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書4</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上" selected>1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>化学室</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品H</a></td><td>常時</td><td>実験</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III">III</option><option value="IV" selected>IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書5</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上" selected>基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>実験室A</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品I</a></td><td>臨時</td><td>実験</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center"></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満" selected>1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center">○</td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>実験室B</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品J</a></td><td>常時</td><td>実験</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書6</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上" selected>1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">S部門</a></td><td>組立A</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品K</a></td><td>常時</td><td>組立</td><td class="text-center"></td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I" selected>I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I" selected>I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center"></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="" selected>-</option><option value="1/2未満">1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">S部門</a></td><td>組立B</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品L</a></td><td>常時</td><td>組立</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I" selected>I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満" selected>1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center"></td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">S部門</a></td><td>組立C</td><td>屋外</td><td><a href="#" class="text-decoration-underline">製品M</a></td><td>臨時</td><td>組立</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center"></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満" selected>1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center"></td><td class="text-center">○</td><td class="text-center"></td><td class="text-center">○</td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">X部門</a></td><td>製造A</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品N</a></td><td>常時</td><td>製造</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書7</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上" selected>1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">X部門</a></td><td>製造B</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品O</a></td><td>常時</td><td>製造</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III">III</option><option value="IV" selected>IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書8</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上" selected>基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">X部門</a></td><td>製造C</td><td>屋外</td><td><a href="#" class="text-decoration-underline">製品P</a></td><td>臨時</td><td>製造</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center"></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満" selected>1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center"></td><td class="text-center"></td><td class="text-center">○</td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装E</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品Q</a></td><td>常時</td><td>塗装</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書9</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上" selected>1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">M部門</a></td><td>試験室</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品R</a></td><td>常時</td><td>試験</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I" selected>I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満" selected>1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center"></td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center"></td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>開発室</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品S</a></td><td>常時</td><td>開発</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II">II</option><option value="III" selected>III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">要</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">報告書10</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満">1/2未満</option><option value="1/2以上" selected>1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center">○</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">S部門</a></td><td>組立D</td><td>屋内</td><td><a href="#" class="text-decoration-underline">製品T</a></td><td>常時</td><td>組立</td><td class="text-center">○</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><a href="#" class="text-decoration-underline">○</a><i class="ri-close-circle-line delete-btn delete-saved"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I">I</option><option value="II" selected>II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="I" selected>I</option><option value="II">II</option><option value="III">III</option><option value="IV">IV</option></select></td>
+                                <td class="text-center">否</td>
+                                <td class="text-center editable-cell"><div class="saved-row"><i class="ri-upload-2-line upload-icon"></i></div><div class="temp-row"><span class="file-name"></span><i class="ri-close-circle-line delete-btn delete-temp"></i></div></td>
+                                <td class="text-center">○</td>
+                                <td class="text-center editable-cell"><select class="form-select form-select-sm" disabled><option value="">-</option><option value="1/2未満" selected>1/2未満</option><option value="1/2以上">1/2以上</option><option value="基準値以上">基準値以上</option></select></td>
+                                <td class="text-center">○</td><td class="text-center"></td><td class="text-center">○</td><td class="text-center">○</td><td class="text-center"></td></tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        </div>
+                        <div class="justify-content-end mt-2 hidden" id="editActionButtons">
+                            <button class="btn btn-chem" id="registerBtn">
+                                <i class="ri-save-line me-1"></i>登録
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @@include("partials/chem-footer.html")
+</div>
+
+<!-- アップロードモーダル -->
+<div class="upload-modal" id="uploadModal">
+    <div class="upload-box">
+        <h5>ファイルアップロード</h5>
+        <div class="drop-zone" id="dropZone">
+            <div class="drop-zone-text">
+                <i class="ri-upload-cloud-2-line upload-cloud-icon"></i>
+                <p>ファイルをドラッグ＆ドロップ<br>または</p>
+            </div>
+            <input type="file" id="fileInput" accept=".pdf" class="hidden">
+            <button class="btn btn-chem" id="selectFileBtn">ファイルを選択</button>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-secondary" id="cancelUploadBtn">キャンセル</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // テーブル行クリックでハイライト
+    const table = document.getElementById('resultTable');
+    const tbody = table.querySelector('tbody');
+    tbody.addEventListener('click', function(e) {
+        const row = e.target.closest('tr');
+        if (row && !e.target.classList.contains('upload-icon')) {
+            tbody.querySelectorAll('tr').forEach(tr => {
+                tr.classList.remove('table-active');
+            });
+            row.classList.add('table-active');
+        }
+    });
+
+    // 編集モード切替
+    let isEditMode = false;
+    const viewModeBtn = document.getElementById('viewModeBtn');
+    const editModeBtn = document.getElementById('editModeBtn');
+    const tableWrapper = document.getElementById('tableWrapper');
+    const editActionButtons = document.getElementById('editActionButtons');
+
+    function setEditMode(editMode) {
+        isEditMode = editMode;
+        if (isEditMode) {
+            viewModeBtn.classList.remove('active');
+            editModeBtn.classList.add('active');
+            tableWrapper.classList.add('edit-mode');
+            editActionButtons.classList.remove('hidden');
+            editActionButtons.classList.add('d-flex');
+            // セレクトボックスを有効化
+            document.querySelectorAll('.editable-cell select').forEach(sel => {
+                sel.disabled = false;
+            });
+        } else {
+            viewModeBtn.classList.add('active');
+            editModeBtn.classList.remove('active');
+            tableWrapper.classList.remove('edit-mode');
+            editActionButtons.classList.add('hidden');
+            editActionButtons.classList.remove('d-flex');
+            // セレクトボックスを無効化
+            document.querySelectorAll('.editable-cell select').forEach(sel => {
+                sel.disabled = true;
+            });
+        }
+    }
+
+    viewModeBtn.addEventListener('click', function() {
+        setEditMode(false);
+    });
+
+    editModeBtn.addEventListener('click', function() {
+        setEditMode(true);
+    });
+
+    document.getElementById('registerBtn').addEventListener('click', function() {
+        alert('登録しました');
+    });
+
+    // クリアボタン
+    document.getElementById('clearBtn').addEventListener('click', function() {
+        document.getElementById('unit-choice').value = '';
+        document.getElementById('workplace-choice').value = '';
+        document.getElementById('product-name').value = '';
+        document.querySelectorAll('.form-check-input').forEach(cb => cb.checked = false);
+    });
+
+    // 検索ボタン
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        alert('検索を実行します');
+    });
+
+    // アップロードモーダル
+    const uploadModal = document.getElementById('uploadModal');
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const selectFileBtn = document.getElementById('selectFileBtn');
+    const cancelUploadBtn = document.getElementById('cancelUploadBtn');
+    let currentUploadCell = null;
+
+    // アップロードアイコンクリック
+    document.querySelectorAll('.upload-icon').forEach(icon => {
+        icon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isEditMode) {
+                currentUploadCell = this.closest('td');
+                uploadModal.classList.add('show');
+            }
+        });
+    });
+
+    // 保存済みファイル削除ボタンクリック
+    document.querySelectorAll('.delete-saved').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isEditMode) {
+                if (confirm('保存済みのファイルを削除しますか？')) {
+                    const savedRow = this.closest('.saved-row');
+                    const link = savedRow.querySelector('a');
+                    if (link) link.remove();
+                    this.remove();
+                    // アップロードアイコンを追加
+                    const uploadIcon = document.createElement('i');
+                    uploadIcon.className = 'ri-upload-2-line upload-icon';
+                    uploadIcon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        if (isEditMode) {
+                            currentUploadCell = this.closest('td');
+                            uploadModal.classList.add('show');
+                        }
+                    });
+                    savedRow.appendChild(uploadIcon);
+                }
+            }
+        });
+    });
+
+    // テンポラリファイル削除ボタンクリック
+    document.querySelectorAll('.delete-temp').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isEditMode) {
+                const tempRow = this.closest('.temp-row');
+                const fileName = tempRow.querySelector('.file-name');
+                if (fileName) {
+                    fileName.textContent = '';
+                    fileName.title = '';
+                }
+                tempRow.classList.remove('has-file');
+            }
+        });
+    });
+
+    // ファイル選択ボタン
+    selectFileBtn.addEventListener('click', function() {
+        fileInput.click();
+    });
+
+    // ファイル選択時
+    fileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            handleFile(this.files[0]);
+        }
+    });
+
+    // ドラッグ＆ドロップ
+    dropZone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        if (e.dataTransfer.files.length > 0) {
+            handleFile(e.dataTransfer.files[0]);
+        }
+    });
+
+    // ファイル処理
+    function handleFile(file) {
+        if (file.type === 'application/pdf') {
+            if (currentUploadCell) {
+                const tempRow = currentUploadCell.querySelector('.temp-row');
+                const fileName = tempRow.querySelector('.file-name');
+                fileName.textContent = file.name;
+                fileName.title = file.name;
+                tempRow.classList.add('has-file');
+            }
+            uploadModal.classList.remove('show');
+            fileInput.value = '';
+        } else {
+            alert('PDFファイルを選択してください');
+        }
+    }
+
+    // キャンセルボタン
+    cancelUploadBtn.addEventListener('click', function() {
+        uploadModal.classList.remove('show');
+        fileInput.value = '';
+    });
+
+    // モーダル外クリックで閉じる
+    uploadModal.addEventListener('click', function(e) {
+        if (e.target === uploadModal) {
+            uploadModal.classList.remove('show');
+            fileInput.value = '';
+        }
+    });
+</script>
+
+</body>
+</html>

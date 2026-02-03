@@ -1,0 +1,686 @@
+/*
+Template Name: Velzon - Admin & Dashboard Template
+Author: Themesbrand
+Website: https://themesbrand.com/
+Contact: support@themesbrand.com
+File: Custom Css File
+*/
+
+// ============================================
+// 化学物質管理システム カスタムスタイル
+// ============================================
+
+// 変数定義
+:root {
+    --chem-default-padding: .5rem;
+    --chem-default-font-family: "メイリオ", "Meiryo", sans-serif;
+    --chem-default-font-size: 14px;
+    --chem-default-font-color: #444;
+    --chem-default-border-color: #ccc;
+    --chem-default-transition-duration: .2s;
+    --chem-header-height: 2rem;
+    --chem-header-background-color: #013220;
+    --chem-header-title-font-weight: bold;
+    --chem-header-font-color: #fff;
+    --chem-menu-width: 20rem;
+    --chem-menu-background-color: #F0FFF0;
+    --chem-menu-hover-background-color: #ddd;
+    --chem-main-background-color: #eee;
+    --chem-main-title-font-size: 180%;
+    --chem-main-title-font-weight: bold;
+    --chem-footer-height: 1.5rem;
+}
+
+// bodyスクロール無効
+html, body {
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+// labelのmargin-bottom上書き
+label {
+    margin-bottom: 0;
+}
+
+// コンテナ
+.chem-container {
+    font-family: var(--chem-default-font-family);
+    font-size: var(--chem-default-font-size);
+    color: var(--chem-default-font-color);
+    height: 100vh;
+    overflow: hidden;
+    padding-top: var(--chem-header-height);
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+// ヘッダー
+.chem-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    height: var(--chem-header-height);
+    background-color: var(--chem-header-background-color);
+    color: var(--chem-header-font-color);
+    z-index: 100;
+
+    // ハンバーガーメニュー
+    .hamburger-menu {
+        display: flex;
+        margin: auto 0;
+
+        #hamburger-checkbox {
+            display: none;
+        }
+
+        .hamburger-lines {
+            align-self: center;
+            padding: 0 0.5rem;
+            cursor: pointer;
+
+            .hamburger-line {
+                display: block;
+                width: 18px;
+                height: 2px;
+                margin: 3px 0;
+                background-color: #fff;
+                border-radius: 1px;
+                transition: var(--chem-default-transition-duration);
+            }
+        }
+
+        // メニューを開いた時のハンバーガーアイコン(←タイプ)
+        #hamburger-checkbox:checked ~ .hamburger-lines.arrow {
+            .hamburger-line:nth-child(1) {
+                transform: rotate(-45deg) translate(-3px, 0px);
+                width: 10px;
+            }
+            .hamburger-line:nth-child(2) {
+                opacity: 1;
+            }
+            .hamburger-line:nth-child(3) {
+                transform: rotate(45deg) translate(-3px, 0px);
+                width: 10px;
+            }
+        }
+    }
+
+    // ヘッダーロゴ
+    .header-logo {
+        display: grid;
+        justify-items: center;
+        align-content: center;
+        font-size: 100%;
+        padding: 0 0.3rem;
+    }
+
+    // ヘッダータイトル
+    .header-title {
+        flex: 1;
+        display: grid;
+        align-content: center;
+        padding: 0 var(--chem-default-padding);
+        font-weight: var(--chem-header-title-font-weight);
+        font-size: 120%;
+    }
+
+    // ユーザ名
+    .header-user {
+        display: grid;
+        justify-items: center;
+        align-content: center;
+        padding: 0 var(--chem-default-padding);
+    }
+
+    // ログアウトメニュー
+    .header-menu {
+        display: grid;
+        justify-items: center;
+        align-content: center;
+        padding: 0 var(--chem-default-padding);
+    }
+}
+
+// ボディ(左メニュー＋メインパネル)
+.chem-body {
+    display: flex;
+    height: calc(100vh - var(--chem-header-height) - var(--chem-footer-height));
+    overflow: hidden;
+
+    // 左メニュー
+    .chem-menu {
+        font-size: 150%;
+        width: 0;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background-color: var(--chem-menu-background-color);
+        transition: var(--chem-default-transition-duration);
+        flex-shrink: 0;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            min-width: 100%;
+
+            li {
+
+                .menu-item {
+                    display: block;
+                    width: 100%;
+                    padding: .2rem;
+                    padding-left: 0.5rem;
+                    white-space: nowrap;
+                    text-decoration: none;
+                    color: inherit;
+
+                    &.menu-link {
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: var(--chem-menu-hover-background-color);
+                        }
+
+                        &.active {
+                            background-color: #a5d6a7;
+                            color: var(--chem-default-font-color);
+                        }
+                    }
+
+                    &.menu-category {
+                        cursor: default;
+                    }
+
+                    &.sub-item {
+                        position: relative;
+                        padding-left: 1.5rem;
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            left: 0.7rem;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            width: 6px;
+                            height: 1.5px;
+                            background-color: var(--chem-default-font-color);
+                            opacity: 0.5;
+                            transition: var(--chem-default-transition-duration);
+                        }
+
+                        &:hover::before {
+                            opacity: 1;
+                        }
+
+                        &.active::before {
+                            background-color: var(--chem-default-font-color);
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 最上位以外のメニューに左インデントをつける
+        > ul ul {
+            margin-left: .7rem;
+        }
+    }
+
+    // メインパネル
+    .chem-main {
+        flex: 1;
+        height: 100%;
+        overflow: hidden;
+        background-color: var(--chem-main-background-color);
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+
+        .page-title-box {
+            flex-shrink: 0;
+            padding: 0.75rem 1rem;
+            margin: 0;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid var(--chem-default-border-color);
+            box-shadow: none;
+
+            h4 {
+                font-size: 150% !important;
+                font-weight: var(--chem-main-title-font-weight);
+                margin: 0;
+                text-transform: none;
+            }
+        }
+
+    }
+}
+
+// 開いたときの左メニュー
+.chem-header:has(#hamburger-checkbox:checked) ~ .chem-body .chem-menu {
+    width: var(--chem-menu-width);
+}
+
+// フッター
+.chem-footer {
+    height: var(--chem-footer-height);
+    background-color: var(--chem-header-background-color);
+}
+
+// ニューモーフィズムボタン
+.btn-neu {
+    padding: 12px 32px;
+    font-size: 1rem;
+    color: #333;
+    background: #e0e5ec;
+    border-radius: 12px;
+    box-shadow:
+        inset 4px 4px 8px rgba(255,255,255,0.8),
+        inset -4px -4px 8px rgba(0,0,0,0.1),
+        8px 8px 16px rgba(0,0,0,0.07);
+    border: none;
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.2s;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            inset 2px 2px 4px rgba(255,255,255,0.8),
+            inset -2px -2px 4px rgba(0,0,0,0.1),
+            12px 12px 24px rgba(0,0,0,0.1);
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow:
+            inset 4px 4px 8px rgba(0,0,0,0.1),
+            inset -4px -4px 8px rgba(255,255,255,0.8);
+    }
+}
+
+// グリッドコンテナ（検索条件・検索結果）
+.chem-grid-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    padding: 0.5rem;
+    gap: 0.5rem;
+
+    .chem-top {
+        flex-shrink: 0;
+        margin: 0;
+
+        .card-header {
+            background-color: #f5f5f5;
+            padding: 0.4rem 0.75rem;
+
+            .card-title {
+                font-size: 120% !important;
+            }
+        }
+
+        .card-body {
+            font-size: 120%;
+        }
+    }
+
+    .chem-bottom {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+
+        .card-header {
+            background-color: #f5f5f5;
+            padding: 0.4rem 0.75rem;
+
+            .card-title {
+                font-size: 120% !important;
+            }
+        }
+
+        .card-body {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            font-size: 120%;
+
+            .table-responsive {
+                flex: 1;
+                overflow: auto;
+            }
+        }
+    }
+}
+
+// 検索フォームラベル
+.chem-form-label {
+    font-size: 180%;
+}
+
+// 検索フォーム入力
+.chem-form-input {
+    font-size: 180%;
+}
+
+// 検索ボタン
+.btn-chem {
+    background-color: #495057;
+    color: #fff;
+    border: none;
+
+    &:hover {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    &:active, &:focus {
+        background-color: #212529;
+        color: #fff;
+    }
+}
+
+// テーブルヘッダー固定（ヘッダーとボディを分離）
+.chem-bottom {
+    .table-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .table-header {
+        flex-shrink: 0;
+        overflow-y: scroll;
+
+        // スクロールバーを透明にしてヘッダーとボディの幅を合わせる
+        &::-webkit-scrollbar {
+            background: transparent;
+        }
+        scrollbar-color: transparent transparent;
+    }
+
+    .table-body {
+        flex: 1;
+        overflow: auto;
+    }
+
+    table.table {
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 0;
+        table-layout: fixed;
+        width: 100%;
+
+        thead th {
+            background: #495057;
+            color: #fff;
+            border: 1px solid #343a40;
+            border-bottom-width: 2px;
+            vertical-align: top;
+
+            &.th-compact {
+                padding: 0.25rem 0.5rem;
+                line-height: 1.2;
+                vertical-align: middle;
+            }
+        }
+
+        tbody td {
+            border: 1px solid #999;
+        }
+
+        tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+    }
+}
+
+// 編集可能セル
+.editable.edit-active,
+.editable-checkbox.edit-active {
+    background-color: #fffbe6 !important;
+}
+
+.editable.edit-active {
+    cursor: text;
+
+    &:focus {
+        outline: 2px solid #198754;
+        outline-offset: -2px;
+    }
+}
+
+// 緑色チェックボックス
+.chem-checkbox {
+    appearance: none;
+    width: 1.2em;
+    height: 1.2em;
+    border: 2px solid #198754;
+    border-radius: 3px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: middle;
+
+    &:checked {
+        background-color: #198754;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+        background-size: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: 1;
+    }
+}
+
+// ハイライトセル（黄色背景）
+.highlight-cell {
+    background-color: #ffff00 !important;
+}
+
+// 画面の横幅が狭いときの対応
+@media (max-width: 768px) {
+    .chem-menu {
+        position: absolute;
+        z-index: 50;
+        height: calc(100vh - var(--chem-header-height)) !important;
+    }
+}
+
+// ============================================
+// 掲示物ページ用スタイル
+// ============================================
+
+// アップロードアイコン
+.upload-icon {
+    display: none;
+    cursor: pointer;
+    color: #5a6067;
+    margin-left: 4px;
+
+    &:hover {
+        color: #198754;
+    }
+}
+
+.edit-mode .upload-icon {
+    display: inline;
+}
+
+// 保存済み行
+.saved-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+// テンポラリ行
+.temp-row {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.8em;
+    margin-top: 2px;
+}
+
+.edit-mode .temp-row.has-file {
+    display: flex;
+}
+
+// ファイル名
+.file-name {
+    color: #666;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// 削除ボタン
+.delete-btn {
+    display: none;
+    cursor: pointer;
+    color: #dc3545;
+    font-size: 0.9em;
+
+    &:hover {
+        color: #a71d2a;
+    }
+}
+
+.edit-mode .delete-btn {
+    display: inline;
+}
+
+// アップロードモーダル
+.upload-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+
+    &.show {
+        display: flex;
+    }
+}
+
+.upload-box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 400px;
+}
+
+.drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 1rem 0;
+    transition: border-color 0.3s, background-color 0.3s;
+
+    &.dragover {
+        border-color: #198754;
+        background-color: #f0fff0;
+    }
+}
+
+.drop-zone-text {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+// トグルボタン
+.toggle-btn-group {
+    display: inline-flex;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 2px solid #495057;
+    background-color: #e9ecef;
+}
+
+.toggle-btn {
+    padding: 0.25rem 0.75rem;
+    border: 2px solid #e9ecef;
+    background-color: #e9ecef;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.5;
+
+    &:first-child {
+        border-radius: 4px 0 0 4px;
+    }
+
+    &:last-child {
+        border-radius: 0 4px 4px 0;
+    }
+
+    &.active {
+        background-color: #495057;
+        color: #fff;
+        border-radius: 10px;
+    }
+
+    &:hover:not(.active) {
+        background-color: #dee2e6;
+    }
+}
+
+// 編集モード時の列背景色
+.edit-mode .editable-cell {
+    background-color: #fffbe6 !important;
+}
+
+// テーブル内のセレクトボックス
+.editable-cell select.form-select-sm {
+    width: 100%;
+    min-width: 0;
+    padding: 0.15rem 1.5rem 0.15rem 0.3rem;
+    font-size: 0.85em;
+    background-position: right 0.25rem center;
+    background-size: 12px 12px;
+}
+
+// CSV出力ボタンのマージン調整
+.csv-btn-wrapper {
+    margin-top: 4px;
+}
+
+// アップロードモーダルのアイコン
+.upload-cloud-icon {
+    font-size: 3rem;
+    color: #5a6067;
+}
+
+// 非表示用クラス
+.hidden {
+    display: none;
+}
+
+// テーブルボディの下枠（掲示物ページ用）
+.chem-bottom .table-body {
+    border-bottom: 1px solid #999;
+}

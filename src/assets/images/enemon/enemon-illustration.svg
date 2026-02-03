@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300">
+  <!-- Energy Monitoring Illustration -->
+  <defs>
+    <style>
+      .line-art { fill: none; stroke: #0D99FF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .line-art-thin { fill: none; stroke: #0D99FF; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+      .fill-blue { fill: #0D99FF; }
+      .fill-light { fill: #E8F4FC; }
+    </style>
+  </defs>
+
+  <!-- Ground line -->
+  <path class="line-art" d="M0,280 L800,280"/>
+
+  <!-- Wind turbine 1 -->
+  <g transform="translate(50, 100)">
+    <line class="line-art" x1="30" y1="180" x2="30" y2="60"/>
+    <circle class="line-art" cx="30" cy="55" r="8"/>
+    <path class="line-art" d="M30,55 L30,10 M30,55 L55,80 M30,55 L5,80"/>
+  </g>
+
+  <!-- Wind turbine 2 -->
+  <g transform="translate(100, 120)">
+    <line class="line-art" x1="25" y1="160" x2="25" y2="50"/>
+    <circle class="line-art" cx="25" cy="45" r="6"/>
+    <path class="line-art" d="M25,45 L25,10 M25,45 L45,65 M25,45 L5,65"/>
+  </g>
+
+  <!-- House with solar panels -->
+  <g transform="translate(180, 180)">
+    <path class="line-art" d="M0,100 L0,50 L40,20 L80,50 L80,100 Z"/>
+    <rect class="line-art" x="30" y="60" width="20" height="40"/>
+    <path class="line-art" d="M5,45 L40,15 L75,45"/>
+    <!-- Solar panels on roof -->
+    <rect class="line-art-thin" x="15" y="30" width="12" height="8" transform="rotate(-25, 21, 34)"/>
+    <rect class="line-art-thin" x="35" y="25" width="12" height="8" transform="rotate(-25, 41, 29)"/>
+    <rect class="line-art-thin" x="55" y="30" width="12" height="8" transform="rotate(25, 61, 34)"/>
+  </g>
+
+  <!-- Trees -->
+  <g transform="translate(280, 220)">
+    <line class="line-art" x1="15" y1="60" x2="15" y2="30"/>
+    <circle class="line-art" cx="15" cy="20" r="15"/>
+  </g>
+
+  <g transform="translate(310, 230)">
+    <line class="line-art" x1="10" y1="50" x2="10" y2="25"/>
+    <circle class="line-art" cx="10" cy="18" r="12"/>
+  </g>
+
+  <!-- Office building -->
+  <g transform="translate(350, 130)">
+    <rect class="line-art" x="0" y="0" width="60" height="150"/>
+    <!-- Windows -->
+    <rect class="line-art-thin" x="10" y="15" width="15" height="12"/>
+    <rect class="line-art-thin" x="35" y="15" width="15" height="12"/>
+    <rect class="line-art-thin" x="10" y="40" width="15" height="12"/>
+    <rect class="line-art-thin" x="35" y="40" width="15" height="12"/>
+    <rect class="line-art-thin" x="10" y="65" width="15" height="12"/>
+    <rect class="line-art-thin" x="35" y="65" width="15" height="12"/>
+    <rect class="line-art-thin" x="10" y="90" width="15" height="12"/>
+    <rect class="line-art-thin" x="35" y="90" width="15" height="12"/>
+    <rect class="line-art-thin" x="10" y="115" width="15" height="12"/>
+    <rect class="line-art-thin" x="35" y="115" width="15" height="12"/>
+  </g>
+
+  <!-- Tall building -->
+  <g transform="translate(430, 100)">
+    <rect class="line-art" x="0" y="0" width="50" height="180"/>
+    <!-- Windows pattern -->
+    <rect class="line-art-thin" x="8" y="15" width="10" height="8"/>
+    <rect class="line-art-thin" x="32" y="15" width="10" height="8"/>
+    <rect class="line-art-thin" x="8" y="35" width="10" height="8"/>
+    <rect class="line-art-thin" x="32" y="35" width="10" height="8"/>
+    <rect class="line-art-thin" x="8" y="55" width="10" height="8"/>
+    <rect class="line-art-thin" x="32" y="55" width="10" height="8"/>
+    <rect class="line-art-thin" x="8" y="75" width="10" height="8"/>
+    <rect class="line-art-thin" x="32" y="75" width="10" height="8"/>
+    <rect class="line-art-thin" x="8" y="95" width="10" height="8"/>
+    <rect class="line-art-thin" x="32" y="95" width="10" height="8"/>
+    <rect class="line-art-thin" x="8" y="115" width="10" height="8"/>
+    <rect class="line-art-thin" x="32" y="115" width="10" height="8"/>
+    <rect class="line-art-thin" x="8" y="135" width="10" height="8"/>
+    <rect class="line-art-thin" x="32" y="135" width="10" height="8"/>
+    <rect class="line-art-thin" x="8" y="155" width="10" height="8"/>
+    <rect class="line-art-thin" x="32" y="155" width="10" height="8"/>
+  </g>
+
+  <!-- Factory/Power plant -->
+  <g transform="translate(520, 160)">
+    <rect class="line-art" x="0" y="40" width="80" height="80"/>
+    <!-- Chimney -->
+    <rect class="line-art" x="60" y="0" width="15" height="40"/>
+    <!-- Smoke -->
+    <path class="line-art-thin" d="M67,0 Q70,-10 75,-5 Q80,0 78,-10"/>
+    <!-- Windows -->
+    <rect class="line-art-thin" x="10" y="60" width="20" height="15"/>
+    <rect class="line-art-thin" x="40" y="60" width="20" height="15"/>
+    <rect class="line-art" x="30" y="90" width="20" height="30"/>
+  </g>
+
+  <!-- Solar farm -->
+  <g transform="translate(630, 220)">
+    <rect class="line-art" x="0" y="20" width="25" height="15" transform="rotate(-15, 12, 27)"/>
+    <rect class="line-art" x="35" y="20" width="25" height="15" transform="rotate(-15, 47, 27)"/>
+    <rect class="line-art" x="70" y="20" width="25" height="15" transform="rotate(-15, 82, 27)"/>
+    <line class="line-art-thin" x1="12" y1="35" x2="12" y2="60"/>
+    <line class="line-art-thin" x1="47" y1="35" x2="47" y2="60"/>
+    <line class="line-art-thin" x1="82" y1="35" x2="82" y2="60"/>
+  </g>
+
+  <!-- Sun -->
+  <g transform="translate(550, 30)">
+    <circle class="line-art" cx="0" cy="0" r="20"/>
+    <line class="line-art-thin" x1="0" y1="-30" x2="0" y2="-40"/>
+    <line class="line-art-thin" x1="25" y1="-15" x2="35" y2="-22"/>
+    <line class="line-art-thin" x1="30" y1="0" x2="40" y2="0"/>
+    <line class="line-art-thin" x1="25" y1="15" x2="35" y2="22"/>
+    <line class="line-art-thin" x1="-25" y1="-15" x2="-35" y2="-22"/>
+    <line class="line-art-thin" x1="-30" y1="0" x2="-40" y2="0"/>
+    <line class="line-art-thin" x1="-25" y1="15" x2="-35" y2="22"/>
+  </g>
+
+  <!-- Clouds -->
+  <g transform="translate(200, 40)">
+    <ellipse class="line-art-thin" cx="20" cy="15" rx="20" ry="12"/>
+    <ellipse class="line-art-thin" cx="45" cy="18" rx="15" ry="10"/>
+    <ellipse class="line-art-thin" cx="35" cy="10" rx="12" ry="8"/>
+  </g>
+
+  <g transform="translate(700, 60)">
+    <ellipse class="line-art-thin" cx="15" cy="12" rx="15" ry="10"/>
+    <ellipse class="line-art-thin" cx="35" cy="15" rx="12" ry="8"/>
+    <ellipse class="line-art-thin" cx="28" cy="8" rx="10" ry="6"/>
+  </g>
+
+  <!-- Car -->
+  <g transform="translate(300, 260)">
+    <path class="line-art" d="M0,15 L5,15 L10,5 L35,5 L40,15 L50,15 L50,20 L0,20 Z"/>
+    <circle class="line-art" cx="12" cy="20" r="5"/>
+    <circle class="line-art" cx="38" cy="20" r="5"/>
+  </g>
+</svg>

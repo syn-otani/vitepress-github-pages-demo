@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>作業場検索－管理者・作業者情報 | 化学物質管理システム</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="化学物質管理システム" name="description">
+    <meta content="ADIS" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- Icons Css -->
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- App Css -->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom Css -->
+    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="chem-container">
+    @@include("partials/chem-header.html")
+    <!-- ボディ(左メニュー＋メインパネル) -->
+    <div class="chem-body">
+        @@include("partials/chem-sidebar.html", {"activePage": "workplace-manager-search"})
+        <!-- メインパネル -->
+        <div class="chem-main">
+            <div class="page-title-box">
+                <h4 class="mb-0">作業場検索－管理者・作業者情報</h4>
+            </div>
+
+            <div class="chem-grid-container">
+                <div class="chem-top card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">検索条件</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap align-items-start gap-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <label class="form-label mb-0 text-nowrap" for="unit-choice">部門</label>
+                                <select class="form-select" id="unit-choice" name="unit-choice">
+                                    <option value="">選択してください</option>
+                                    <option value="T製">T製</option>
+                                    <option value="M部門">M部門</option>
+                                    <option value="R部門">R部門</option>
+                                    <option value="S部門">S部門</option>
+                                    <option value="X部門">X部門</option>
+                                </select>
+                            </div>
+                            <!-- 検索・クリアボタン -->
+                            <div class="col-auto ms-auto align-self-end d-flex gap-2">
+                                <button class="btn btn-chem">
+                                    <i class="ri-search-line me-1"></i>検索
+                                </button>
+                                <button class="btn btn-chem">
+                                    <i class="ri-refresh-line me-1"></i>クリア
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chem-bottom card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">検索結果</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-end gap-2 mb-2">
+                            <button class="btn btn-chem">
+                                特殊健診対象者表示
+                            </button>
+                            <button class="btn btn-chem">
+                                作業記録対象者表示
+                            </button>
+                            <button class="btn btn-chem">
+                                <i class="ri-file-download-line me-1"></i>CSV出力
+                            </button>
+                        </div>
+                        <div class="table-wrapper">
+                        <div class="table-header">
+                        <table class="table table-bordered align-middle mb-0">
+                            <colgroup>
+                                <col style="width: 8em;">
+                                <col style="width: 8em;">
+                                <col style="width: 10em;">
+                                <col style="width: 12em;">
+                                <col style="width: 10em;">
+                                <col style="width: 12em;">
+                                <col style="width: 14em;">
+                                <col style="width: 10em;">
+                            </colgroup>
+                            <thead class="table-light">
+                            <tr>
+                                <th>部門</th>
+                                <th>作業場</th>
+                                <th>化学物質管理者</th>
+                                <th>保護具着用管理責任者</th>
+                                <th>衛生管理者</th>
+                                <th>有機溶剤作業主任者</th>
+                                <th>特定化学物質作業主任者</th>
+                                <th>鉛作業主任者</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        </div>
+                        <div class="table-body">
+                        <table class="table table-bordered table-striped table-hover align-middle mb-0" id="resultTable">
+                            <colgroup>
+                                <col style="width: 8em;">
+                                <col style="width: 8em;">
+                                <col style="width: 10em;">
+                                <col style="width: 12em;">
+                                <col style="width: 10em;">
+                                <col style="width: 12em;">
+                                <col style="width: 14em;">
+                                <col style="width: 10em;">
+                            </colgroup>
+                            <tbody>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装A</td><td>日新 太朗</td><td>日新 太朗</td><td>日新 太朗</td><td>日新 次郎</td><td>日新 太朗</td><td>日新 三郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装B</td><td>日新 一郎</td><td>日新 次郎</td><td>日新 三郎</td><td>日新 四郎</td><td>日新 五郎</td><td>日新 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">M部門</a></td><td>塗装A</td><td>日新 花</td><td>日新 梅</td><td>日新 桜</td><td>日新 椿</td><td>日新 蓮</td><td>日新 菊</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>化学室</td><td>ドクターX</td><td>ドクターX</td><td>ドクターX</td><td>ドクターX</td><td>ドクターX</td><td>ドクターX</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>実験室A</td><td>ドクターY</td><td>ドクターY</td><td>ドクターY</td><td>ドクターY</td><td>ドクターY</td><td>ドクターY</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>実験室B</td><td>ドクターZ</td><td>ドクターZ</td><td>ドクターZ</td><td>ドクターZ</td><td>ドクターZ</td><td>ドクターZ</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">S部門</a></td><td>組立A</td><td>田中 太郎</td><td>田中 次郎</td><td>田中 三郎</td><td>田中 四郎</td><td>田中 五郎</td><td>田中 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">S部門</a></td><td>組立B</td><td>鈴木 花子</td><td>鈴木 梅子</td><td>鈴木 桜子</td><td>鈴木 椿子</td><td>鈴木 蓮子</td><td>鈴木 菊子</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装C</td><td>山田 一郎</td><td>山田 次郎</td><td>山田 三郎</td><td>山田 四郎</td><td>山田 五郎</td><td>山田 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">M部門</a></td><td>検査室</td><td>佐藤 太郎</td><td>佐藤 次郎</td><td>佐藤 三郎</td><td>佐藤 四郎</td><td>佐藤 五郎</td><td>佐藤 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>分析室</td><td>高橋 一郎</td><td>高橋 次郎</td><td>高橋 三郎</td><td>高橋 四郎</td><td>高橋 五郎</td><td>高橋 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">S部門</a></td><td>組立C</td><td>伊藤 太郎</td><td>伊藤 次郎</td><td>伊藤 三郎</td><td>伊藤 四郎</td><td>伊藤 五郎</td><td>伊藤 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">X部門</a></td><td>製造A</td><td>渡辺 一郎</td><td>渡辺 次郎</td><td>渡辺 三郎</td><td>渡辺 四郎</td><td>渡辺 五郎</td><td>渡辺 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">X部門</a></td><td>製造B</td><td>中村 太郎</td><td>中村 次郎</td><td>中村 三郎</td><td>中村 四郎</td><td>中村 五郎</td><td>中村 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装D</td><td>小林 一郎</td><td>小林 次郎</td><td>小林 三郎</td><td>小林 四郎</td><td>小林 五郎</td><td>小林 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">M部門</a></td><td>品質管理</td><td>加藤 太郎</td><td>加藤 次郎</td><td>加藤 三郎</td><td>加藤 四郎</td><td>加藤 五郎</td><td>加藤 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">R部門</a></td><td>開発室</td><td>吉田 一郎</td><td>吉田 次郎</td><td>吉田 三郎</td><td>吉田 四郎</td><td>吉田 五郎</td><td>吉田 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">S部門</a></td><td>組立D</td><td>山本 太郎</td><td>山本 次郎</td><td>山本 三郎</td><td>山本 四郎</td><td>山本 五郎</td><td>山本 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">X部門</a></td><td>製造C</td><td>松本 一郎</td><td>松本 次郎</td><td>松本 三郎</td><td>松本 四郎</td><td>松本 五郎</td><td>松本 六郎</td></tr>
+                            <tr><td><a href="#" class="text-decoration-underline">T製</a></td><td>塗装E</td><td>井上 太郎</td><td>井上 次郎</td><td>井上 三郎</td><td>井上 四郎</td><td>井上 五郎</td><td>井上 六郎</td></tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @@include("partials/chem-footer.html")
+</div>
+
+<script>
+    // テーブル行クリックでハイライト
+    const table = document.getElementById('resultTable');
+    const tbody = table.querySelector('tbody');
+    tbody.addEventListener('click', function(e) {
+        const row = e.target.closest('tr');
+        if (row) {
+            tbody.querySelectorAll('tr').forEach(tr => {
+                tr.classList.remove('table-active');
+            });
+            row.classList.add('table-active');
+        }
+    });
+
+</script>
+
+</body>
+</html>

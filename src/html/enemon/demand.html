@@ -1,0 +1,292 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "デマンド監視"})
+
+    @@include("partials/head-css.html")
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html", {"activePage": "demand"})
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    @@include("partials/demand-page-header.html", {
+                        "icon1": "ri-line-chart-line",
+                        "title1": "受電デマンド監視グラフ",
+                        "icon2": "ri-bar-chart-2-line",
+                        "title2": "受電デマンド実績グラフ"
+                    })
+
+                    @@include("partials/summary-card.html", {
+                        "predictedDemand": "522",
+                        "usageRate": "66.1",
+                        "targetDemand": "1700",
+                        "maxDemand": "1700"
+                    })
+
+                    <!-- Main Graph Card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header content-header">
+                                    <!-- Graph Tabs -->
+                                    <ul class="nav nav-tabs content-tabs mb-0" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#monitorGraph" role="tab">
+                                                <i class="ri-line-chart-line me-1"></i> 受電デマンド監視グラフ
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#resultGraph" role="tab">
+                                                <i class="ri-bar-chart-2-line me-1"></i> 受電デマンド実績グラフ
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body" style="padding: 2rem;">
+                                    <div class="tab-content">
+                                        <!-- 監視グラフ Tab -->
+                                        <div class="tab-pane active" id="monitorGraph" role="tabpanel">
+                                            <h5 class="mb-3 fw-bold tab-section-header">
+                                                <span class="border border-dark px-2 py-1 me-2">系統1</span>
+                                                <span>特高受電　受電　電力量</span>
+                                            </h5>
+
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <div id="monitor-chart">
+                                                        <img src="assets/images/demand_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="row g-0" style="background-color: #f8f9fa; padding: 10px; border-radius: 4px;">
+                                                        <div class="col-6">
+                                                            <div class="row g-0">
+                                                                <div class="col-12">
+                                                                    <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px;">
+                                                                        <p class="text-muted mb-1 fs-12" style="font-size: 11px; margin-bottom: 8px;">
+                                                                            <span class="legend-dot bg-success ms-checkbox-offset"></span>
+                                                                            <span class="fw-bold text-primary">予測デマンド</span>
+                                                                        </p>
+                                                                        <h4 class="mb-0 text-end">
+                                                                            <span class="fw-bold text-primary">1352</span>
+                                                                            <small class="text-muted fs-12">kW</small>
+                                                                        </h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                        <p class="text-muted mb-1 fs-12" style="font-size: 11px; margin-bottom: 8px;">
+                                                                            <span class="legend-dot bg-danger ms-checkbox-offset"></span>
+                                                                            <span class="fw-bold text-primary">現在デマンド</span>
+                                                                        </p>
+                                                                        <h4 class="mb-0 text-end">
+                                                                            <span class="fw-bold text-primary">1327</span>
+                                                                            <small class="text-muted fs-12">kW</small>
+                                                                        </h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                        <p class="text-muted mb-1 fs-12" style="font-size: 11px; margin-bottom: 8px;">
+                                                                            <input type="checkbox" class="form-check-input me-2">
+                                                                            <span class="legend-dot bg-purple"></span>
+                                                                            <span class="fw-bold text-primary">目標デマンド</span>
+                                                                        </p>
+                                                                        <h4 class="mb-0 text-end">
+                                                                            <span class="fw-bold text-primary">1750</span>
+                                                                            <small class="text-muted fs-12">kW</small>
+                                                                        </h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                        <p class="text-muted mb-1 fs-12" style="font-size: 11px; margin-bottom: 8px;">
+                                                                            <input type="checkbox" class="form-check-input me-2">
+                                                                            <span class="legend-dot bg-primary"></span>
+                                                                            <span class="fw-bold text-primary">負荷電力</span>
+                                                                        </p>
+                                                                        <h4 class="mb-0 text-end">
+                                                                            <span class="fw-bold text-primary">1356</span>
+                                                                            <small class="text-muted fs-12">kW</small>
+                                                                        </h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="row g-0">
+                                                                <div class="col-12">
+                                                                    <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px;">
+                                                                        <p class="text-muted mb-1 fs-12" style="font-size: 11px; margin-bottom: 8px;">
+                                                                            <input type="checkbox" class="form-check-input me-2">
+                                                                            <span class="legend-dot bg-warning"></span>
+                                                                            <span class="fw-bold text-primary">前回電力</span>
+                                                                        </p>
+                                                                        <h4 class="mb-0 text-end">
+                                                                            &nbsp;
+                                                                        </h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                        <p class="text-muted mb-1 fs-12 text-center" style="font-size: 11px; margin-bottom: 8px;">
+                                                                            <span class="fw-bold text-primary">調整電力</span>
+                                                                        </p>
+                                                                        <h4 class="mb-0 text-end">
+                                                                            <span class="fw-bold text-primary">-442</span>
+                                                                            <small class="text-muted fs-12">kW</small>
+                                                                        </h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                        <p class="text-muted mb-1 fs-12 text-center" style="font-size: 11px; margin-bottom: 8px;">
+                                                                            <span class="fw-bold text-primary">残り電力</span>
+                                                                        </p>
+                                                                        <h4 class="mb-0 text-end">
+                                                                            <span class="fw-bold text-primary">1618</span>
+                                                                            <small class="text-muted fs-12">kW</small>
+                                                                        </h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                        <p class="text-muted mb-1 fs-12 text-center" style="font-size: 11px; margin-bottom: 8px;">
+                                                                            <span class="fw-bold text-primary">残り時間</span>
+                                                                        </p>
+                                                                        <h4 class="mb-0 text-end">
+                                                                            <span class="fw-bold text-primary">27:00</span>
+                                                                        </h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 実績グラフ Tab -->
+                                        <div class="tab-pane" id="resultGraph" role="tabpanel">
+                                            <h5 class="mb-3 fw-bold tab-section-header">
+                                                <span class="border border-dark px-2 py-1 me-2">系統1</span>
+                                                <span>特高受電　受電　電力量</span>
+                                            </h5>
+
+                                            <!-- Controls Row - タイトルとグラフの間 -->
+                                            <div class="mb-3 d-flex align-items-center gap-3 flex-wrap" style="padding-left: 0;">
+                                                <div class="btn-group" role="group" style="margin-left: calc(1.5rem + 8px);">
+                                                    <button type="button" class="btn btn-primary btn-sm">日実績</button>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm">月実績</button>
+                                                </div>
+                                                <!-- Date Navigation -->
+                                                <div class="d-flex align-items-center">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary p-1" style="width: 28px; height: 28px;">
+                                                        <i class="ri-arrow-left-s-line"></i>
+                                                    </button>
+                                                    <span class="mx-2 fw-medium" style="font-size: 14px;">2025/08</span>
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary p-1" style="width: 28px; height: 28px;">
+                                                        <i class="ri-arrow-right-s-line"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- Legend -->
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="legend-dot bg-danger me-1" style="width: 8px; height: 8px;"></span>
+                                                        <span class="fs-12" style="font-size: 12px;">当月最大</span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <input type="checkbox" class="form-check-input me-2">
+                                                        <span class="legend-dot bg-warning me-1" style="width: 8px; height: 8px;"></span>
+                                                        <span class="fs-12" style="font-size: 12px;">過去実績</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <div id="result-chart" style="background: white; border-radius: 4px;">
+                                                        <img src="assets/images/enemon/実績グラフ.png" alt="実績グラフ" class="img-fluid w-100" style="display: block;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <!-- Stats Row -->
+                                                    <div class="row g-0" style="background-color: #f8f9fa; padding: 10px; border-radius: 4px;">
+                                                        <div class="col-12">
+                                                            <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px;">
+                                                                <p class="text-muted mb-1 fs-11" style="font-size: 11px; margin-bottom: 8px;">A10001 高圧受変電 受電電流(S)</p>
+                                                                <h4 class="mb-0"><span class="fw-bold">8.8</span> <small class="text-muted fs-12">A</small></h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                <p class="text-muted mb-1 fs-11" style="font-size: 11px; margin-bottom: 8px;">A10001 高圧受変電 受電電流(S)</p>
+                                                                <h4 class="mb-0"><span class="fw-bold">6.54</span> <small class="text-muted fs-12">A</small></h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                <p class="text-muted mb-1 fs-11" style="font-size: 11px; margin-bottom: 8px;">A10001 高圧受変電 受電電流(S)</p>
+                                                                <h4 class="mb-0"><span class="fw-bold">82</span> <small class="text-muted fs-12">A</small></h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                <p class="text-muted mb-1 fs-11" style="font-size: 11px; margin-bottom: 8px;">A10001 高圧受変電 受電電流(S)</p>
+                                                                <h4 class="mb-0"><span class="fw-bold">30</span> <small class="text-muted fs-12">A</small></h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="text-center" style="background-color: #f8f9fa; padding: 15px 10px; border-top: 1px dotted #dee2e6; border-radius: 4px;">
+                                                                <p class="text-muted mb-1 fs-11" style="font-size: 11px; margin-bottom: 8px;">A10005 高圧受変電 受電力率</p>
+                                                                <h4 class="mb-0"><span class="fw-bold">78</span> <small class="text-muted fs-12">%</small></h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            @@include("partials/footer.html")
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    @@include("partials/vendor-scripts.html")
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>
+

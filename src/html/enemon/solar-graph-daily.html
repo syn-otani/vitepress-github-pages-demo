@@ -1,0 +1,152 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "発電電力量の1日の動き"})
+
+    @@include("partials/head-css.html")
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html", {"activePage": "solar-graph-daily"})
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Left: Page Title with Icon -->
+                            <div class="d-flex align-items-center">
+                                <i class="ri-sun-line me-2 fs-20 text-primary"></i>
+                                <h5 class="page-title mb-0">発電電力量の1日の動き</h5>
+                            </div>
+                            <!-- Right: Alert Buttons -->
+                            <div class="d-flex align-items-center page-alerts">
+                                <i class="bx bxs-volume-full me-3 volume-icon"></i>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-1">1段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-2">2段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-high">高負荷警報</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-disable">調整不能</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Graph Card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <!-- 監視グラフ Tab -->
+                                        <div class="tab-pane active" id="monitorGraph" role="tabpanel">
+                                            <div class="row g-3 mb-4">
+                                                <div class="col">
+                                                    <div class="text-center">
+                                                        <p class="text-muted mb-1 fs-11">現在の発電電力</p>
+                                                        <h4 class="mb-0"><span class="fw-bold">0</span> <small class="text-muted fs-14">A</small></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-left-s-line"></i>
+                                                        </button>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-right-s-line"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-center">
+                                                        <p class="text-muted mb-1 fs-11">総積算発電電力</p>
+                                                        <h4 class="mb-0"><span class="fw-bold">470090</span> <small class="text-muted fs-14">kWh</small></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-10">
+                                                    <div id="monitor-chart">
+                                                        <img src="assets/images/demand_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="row g-3 statistics-container">
+                                                        <div class="col-12">
+                                                            <div class="text-center">
+                                                                <p class="text-muted mb-1 fs-12">
+                                                                    <span class="legend-dot bg-primary ms-checkbox-offset"></span>
+                                                                    <span class="fw-bold text-primary">一般動力6 F22 電圧</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="text-center">
+                                                                <p class="text-muted mb-1 fs-12">
+                                                                    <span class="legend-dot bg-danger ms-checkbox-offset"></span>
+                                                                    <span class="fw-bold text-primary">一般動力6 F22 電流</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="text-center">
+                                                                <p class="text-muted mb-1 fs-12">
+                                                                    <span class="legend-dot bg-warning ms-checkbox-offset"></span>
+                                                                    <span class="fw-bold text-primary">一般動力2 F12 電流</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Bottom Controls -->
+                                            <div class="row mt-4">
+                                                <div class="12">
+                                                    <div class="d-flex justify-content-end gap-2">
+                                                        <button type="button" class="btn btn-outline-secondary">戻る</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            @@include("partials/footer.html")
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    @@include("partials/vendor-scripts.html")
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "ログイン"})
+
+    @@include("partials/head-css.html")
+
+</head>
+
+<body class="enemon-login-page">
+
+    <!-- Background decorations -->
+    <div class="login-bg-decoration">
+        <div class="decoration-top"></div>
+        <div class="decoration-bottom"></div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="row g-0 justify-content-end">
+                <!-- Left side - Branding -->
+                <div class="col-lg-7">
+                    <div class="login-brand-section">
+                        <div class="brand-text">
+                            <p class="brand-subtitle">Energy</p>
+                            <p class="brand-subtitle">Monitoring</p>
+                            <p class="brand-subtitle">System</p>
+                            <img src="assets/images/enemon/logo_large.png" alt="EneMon" class="brand-logo">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right side - Login Form -->
+                <div class="col-lg-5">
+                    <div class="login-form-section">
+                        <div class="form-header">
+                            <h2 class="form-title">Sign in to EneMon</h2>
+                            <p class="form-subtitle">EneMon ログイン</p>
+                        </div>
+
+                        <div class="login-form">
+                            <div class="form-group">
+                                <label for="username" class="form-label">ユーザID</label>
+                                <div class="input-with-icon">
+                                    <i class="ri-user-line input-icon"></i>
+                                    <input type="text" class="form-control" id="username" placeholder="user name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password-input" class="form-label">パスワード</label>
+                                <div class="input-with-icon">
+                                    <i class="ri-lock-2-line input-icon"></i>
+                                    <input type="password" class="form-control" id="password-input" placeholder="password">
+                                </div>
+                            </div>
+
+                            <a href="demand.html" class="btn-login">ログイン</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Illustration -->
+            <div class="login-illustration">
+                <img src="assets/images/enemon/login-illustration.png" alt="Energy Monitoring">
+            </div>
+        </div>
+    </div>
+
+    @@include("partials/vendor-scripts.html")
+
+</body>
+
+</html>

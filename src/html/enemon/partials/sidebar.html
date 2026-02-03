@@ -1,0 +1,156 @@
+<!-- ========== App Menu ========== -->
+<div class="app-menu navbar-menu enemon-sidebar">
+    <!-- LOGO -->
+    <div class="navbar-brand-box">
+        <a href="index.html" class="logo logo-dark">
+            <span class="logo-sm">
+                <span class="logo-text-sm">EneMon</span>
+            </span>
+            <span class="logo-lg">
+                <div class="enemon-logo">
+                    <p class="logo-subtitle mb-0">Energy</p>
+                    <p class="logo-subtitle mb-0">Monitoring</p>
+                    <p class="logo-subtitle mb-0">System</p>
+                    <img src="assets/images/enemon/logo_small.png" alt="EneMon" class="logo-img">
+                </div>
+            </span>
+        </a>
+        <a href="index.html" class="logo logo-light">
+            <span class="logo-sm">
+                <span class="logo-text-sm">EneMon</span>
+            </span>
+            <span class="logo-lg">
+                <div class="enemon-logo">
+                    <p class="logo-subtitle mb-0">Energy</p>
+                    <p class="logo-subtitle mb-0">Monitoring</p>
+                    <p class="logo-subtitle mb-0">System</p>
+                    <img src="assets/images/enemon/logo_small.png" alt="EneMon" class="logo-img">
+                </div>
+            </span>
+        </a>
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+            <i class="ri-record-circle-line"></i>
+        </button>
+    </div>
+
+    <div id="scrollbar">
+        <div class="container-fluid">
+            <div id="two-column-menu"></div>
+            <ul class="navbar-nav" id="navbar-nav">
+                <!-- デマンド -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link active" href="#sidebarDemand" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebarDemand">
+                        <i class="las la-atom"></i> <span>デマンド</span>
+                    </a>
+                    <div class="collapse menu-dropdown show" id="sidebarDemand">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="demand.html" class="nav-link @@if (context.activePage === 'demand') { active }">
+                                    <span class="d-block"><i class="ri-line-chart-line"></i>受電デマンド監視 ＋</span>
+                                    <span class="d-block"><i class="ri-bar-chart-2-line"></i>受電デマンド実績</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="demand-individual.html" class="nav-link @@if (context.activePage === 'demand-individual') { active }">
+                                    <span class="d-block"><i class="ri-line-chart-line"></i>受電デマンド監視 ＋</span>
+                                    <span class="d-block"><i class="ri-layout-grid-line"></i>個別電力監視</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="demand-jisseki.html" class="nav-link @@if (context.activePage === 'demand-jisseki') { active }">
+                                    <span class="d-block"><i class="ri-line-chart-line"></i>受電デマンド監視 ＋</span>
+                                    <span class="d-block"><i class="ri-layout-grid-fill"></i>個別デマンド実績</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="individual-kanshi.html" class="nav-link @@if (context.activePage === 'individual-kanshi') { active }">
+                                    <span class="d-block"><i class="ri-layout-grid-line"></i>個別電力監視 ＋</span>
+                                    <span class="d-block"><i class="ri-layout-grid-line"></i>個別電力監視</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="individual-jisseki.html" class="nav-link @@if (context.activePage === 'individual-jisseki') { active }">
+                                    <span class="d-block"><i class="ri-layout-grid-fill"></i>個別デマンド実績 ＋</span>
+                                    <span class="d-block"><i class="ri-layout-grid-fill"></i>個別デマンド実績</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 分析グラフ -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarAnalysis" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAnalysis">
+                        <i class="ri-bar-chart-2-line"></i> <span>分析グラフ</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarAnalysis">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="analysis-graph.html" class="nav-link @@if (context.activePage === 'analysis-graph') { active }">分析支援複合グラフ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 原単位 -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarUnit" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarUnit">
+                        <i class="ri-bar-chart-fill"></i> <span>原単位</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarUnit">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">原単位分析グラフ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- トレンド -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarTrend" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarTrend">
+                        <i class="bx bx-trending-up"></i> <span>トレンド</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarTrend">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="trend-graph.html" class="nav-link @@if (context.activePage === 'trend-graph') { active }">トレンドグラフ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 太陽光 -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarSolar" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSolar">
+                        <i class="ri-sun-line"></i> <span>太陽光</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarSolar">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="solar-monitoring.html" class="nav-link @@if (context.activePage === 'solar-monitoring') { active }">太陽光モニタリング</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 待機電力 -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarStandby" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarStandby">
+                        <i class="ri-flashlight-line"></i> <span>待機電力</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarStandby">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">待機電力超過時間帯表示</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="sidebar-background"></div>
+</div>
+<!-- App Menu End -->

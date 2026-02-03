@@ -1,0 +1,269 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "受電デマンド＋個別実績"})
+
+    @@include("partials/head-css.html")
+
+</head>
+
+<body>
+
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html", {"activePage": "demand-jisseki"})
+
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    @@include("partials/demand-page-header.html", {
+                        "icon1": "ri-line-chart-line",
+                        "title1": "受電デマンド監視グラフ",
+                        "icon2": "ri-bar-chart-2-line",
+                        "title2": "個別電力実績グラフ"
+                    })
+
+                    @@include("partials/summary-card.html", {
+                        "predictedDemand": "1352",
+                        "usageRate": "77.3",
+                        "targetDemand": "1750",
+                        "maxDemand": "1632"
+                    })
+
+                    <!-- nav tabs -->
+                    <div class="card">
+                        <div class="card-header content-header">
+                            <ul class="nav nav-tabs content-tabs mb-0" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#legacyMonitor" role="tab">
+                                        <i class="ri-line-chart-line me-1"></i> 受電デマンド監視グラフ
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#legacyIndividual" role="tab">
+                                        <i class="ri-bar-chart-2-line me-1"></i> 個別電力実績グラフ
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body" style="padding: 2rem;">
+                            <div class="tab-content">
+                                <!-- Tab 1 -->
+                                <div class="tab-pane active" id="legacyMonitor" role="tabpanel">
+                                    <h5 class="mb-3 fw-bold tab-section-header">
+                                        <span class="border border-dark px-2 py-1 me-2">系統1</span>
+                                        <span>特高受電　受電　電力量</span>
+                                    </h5>
+
+                                    <div class="row">
+                                        <div class="col-lg-9">
+                                            <div id="legacy-monitor-chart">
+                                                <img src="assets/images/demand_graf.png" alt="デマンドグラフ" class="img-fluid w-100">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="row g-0">
+                                                <!-- Row 1 -->
+                                                <div class="col-6" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px;">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <span class="legend-dot bg-success" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block;"></span>
+                                                        <span class="fw-bold text-primary ms-2" style="font-size: 12px;">予測デマンド</span>
+                                                        <span class="ms-auto fw-bold text-primary">1488 <small class="text-muted fs-12">kW</small></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px; border-left: 1px dotted #dee2e6;">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <input type="checkbox" class="form-check-input me-2">
+                                                        <span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #fd7e14;"></span>
+                                                        <span class="fw-bold text-primary ms-2" style="font-size: 12px;">前回デマンド</span>
+                                                        <span class="ms-auto fw-bold text-primary"></span>
+                                                    </div>
+                                                </div>
+                                                <!-- Row 2 -->
+                                                <div class="col-6" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px; border-top: 1px dotted #dee2e6;">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <span class="legend-dot bg-danger" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block;"></span>
+                                                        <span class="fw-bold text-primary ms-2" style="font-size: 12px;">現在デマンド</span>
+                                                        <span class="ms-auto fw-bold text-primary">558 <small class="text-muted fs-12">kW</small></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px; border-top: 1px dotted #dee2e6; border-left: 1px dotted #dee2e6;">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <span class="fw-bold text-primary" style="font-size: 12px;">調整電力</span>
+                                                        <span class="ms-auto fw-bold text-primary">-437 <small class="text-muted fs-12">kW</small></span>
+                                                    </div>
+                                                </div>
+                                                <!-- Row 3 -->
+                                                <div class="col-6" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px; border-top: 1px dotted #dee2e6;">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <input type="checkbox" class="form-check-input me-2">
+                                                        <span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; background-color: #ffffff; border: 1px solid #dee2e6;"></span>
+                                                        <span class="fw-bold text-primary ms-2" style="font-size: 12px;">目標デマンド</span>
+                                                        <span class="ms-auto fw-bold text-primary">1750 <small class="text-muted fs-12">kW</small></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px; border-top: 1px dotted #dee2e6; border-left: 1px dotted #dee2e6;">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <span class="fw-bold text-primary" style="font-size: 12px;">残り電力</span>
+                                                        <span class="ms-auto fw-bold text-primary">1192 <small class="text-muted fs-12">kW</small></span>
+                                                    </div>
+                                                </div>
+                                                <!-- Row 4 -->
+                                                <div class="col-6" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px; border-top: 1px dotted #dee2e6;">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <input type="checkbox" class="form-check-input me-2">
+                                                        <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block;"></span>
+                                                        <span class="fw-bold text-primary ms-2" style="font-size: 12px;">負荷電力</span>
+                                                        <span class="ms-auto fw-bold text-primary">1550 <small class="text-muted fs-12">kW</small></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6" style="background-color: #f8f9fa; padding: 15px 10px; border-radius: 4px; border-top: 1px dotted #dee2e6; border-left: 1px dotted #dee2e6;">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <span class="fw-bold text-primary" style="font-size: 12px;">残り時間</span>
+                                                        <span class="ms-auto fw-bold text-primary">18分0秒</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tab 2 -->
+                                <div class="tab-pane" id="legacyIndividual" role="tabpanel">
+                                    <!-- 個別グラフ上部のサマリー（監視タブと同書式） -->
+                                    <div class="row g-4">
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">受変電受電 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="d-flex align-items-center justify-content-center h-100">
+                                                        <img src="assets/images/enemon/実績グラフ.png" alt="実績グラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>当月最大</span>
+                                                            <span class="stat-value">1530 <small>kW</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">研修室A常用受電 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="d-flex align-items-center justify-content-center h-100">
+                                                        <img src="assets/images/enemon/研修室A実績グラフ.png" alt="研修室A実績グラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>当月最大</span>
+                                                            <span class="stat-value">10 <small>kW</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">研修室B受電 電力量</p>
+                                                <div class="chart-content-row">
+                                                    <div class="d-flex align-items-center justify-content-center h-100">
+                                                        <img src="assets/images/enemon/研修室B実績グラフ.png" alt="研修室B実績グラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>当月最大</span>
+                                                            <span class="stat-value">360 <small>kW</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">予備</p>
+                                                <div class="chart-content-row">
+                                                    <div class="d-flex align-items-center justify-content-center h-100">
+                                                        <img src="assets/images/enemon/予備1実績グラフ.png" alt="予備1実績グラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>当月最大</span>
+                                                            <span class="stat-value">0 <small>kW</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">予備</p>
+                                                <div class="chart-content-row">
+                                                    <div class="d-flex align-items-center justify-content-center h-100">
+                                                        <img src="assets/images/enemon/予備2実績グラフ.png" alt="予備2実績グラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>当月最大</span>
+                                                            <span class="stat-value">0 <small>kW</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="chart-tile">
+                                                <p class="chart-label-top">予備</p>
+                                                <div class="chart-content-row">
+                                                    <div class="d-flex align-items-center justify-content-center h-100">
+                                                        <img src="assets/images/enemon/予備3実績グラフ.png" alt="予備3実績グラフ" class="img-fluid w-100">
+                                                    </div>
+                                                    <div class="chart-stats-col">
+                                                        <div class="chart-stat-item">
+                                                            <span class="stat-label"><span class="legend-dot bg-danger"></span>当月最大</span>
+                                                            <span class="stat-value">0 <small>kW</small></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            @@include("partials/footer.html")
+        </div>
+    </div>
+
+    @@include("partials/group-register-modal.html")
+
+    @@include("partials/vendor-scripts.html")
+    <script src="assets/js/app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var groupRegisterBtn = document.getElementById('groupRegisterBtn');
+            var groupRegisterModal = document.getElementById('groupRegisterModal');
+            if (groupRegisterBtn && groupRegisterModal) {
+                var modal = new bootstrap.Modal(groupRegisterModal);
+                groupRegisterBtn.addEventListener('click', function() {
+                    modal.show();
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
+

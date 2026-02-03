@@ -1,0 +1,252 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "原単位分析グラフ"})
+
+    @@include("partials/head-css.html")
+    
+    <style>
+        /* Custom styles for analysis page */
+        .form-select {
+            background-color: #0d99ff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .form-select:focus {
+            background-color: #0d99ff;
+            color: white;
+            box-shadow: none;
+        }
+        .form-select option {
+            background-color: white;
+            color: #212529;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html", {"activePage": "basic-analysis-graph"})
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Left: Page Title with Icon -->
+                            <div class="d-flex align-items-center">
+                                <i class="ri-bar-chart-2-line me-2 fs-20 text-primary"></i>
+                                <h5 class="page-title mb-0">原単位分析グラフ</h5>
+                            </div>
+                            <!-- Right: Alert Buttons -->
+                            <div class="d-flex align-items-center page-alerts">
+                                <i class="bx bxs-volume-full me-3 volume-icon"></i>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-1">1段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-2">2段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-high">高負荷警報</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-disable">調整不能</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Graph Card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <!-- 監視グラフ Tab -->
+                                        <div class="tab-pane active" id="monitorGraph" role="tabpanel">
+                                            <!-- Controls Row -->
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-2">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>001:グループ 01</option>
+                                                            <option value="group02">002:グループ 02</option>
+                                                            <option value="group03">003:グループ 03</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-left-s-line"></i>
+                                                        </button>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <select class="group-select">
+                                                            <option value="00" selected>00</option>
+                                                            <option value="01">01</option>
+                                                            <option value="02">02</option>
+                                                            <option value="03">03</option>
+                                                            <option value="04">04</option>
+                                                            <option value="05">05</option>
+                                                            <option value="06">06</option>
+                                                            <option value="07">07</option>
+                                                            <option value="08">08</option>
+                                                            <option value="09">09</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                            <option value="19">19</option>
+                                                            <option value="20">20</option>
+                                                            <option value="21">21</option>
+                                                            <option value="22">22</option>
+                                                            <option value="23">23</option>
+                                                        </select>時
+                                                        <span class="mx-2">～</span>
+                                                        <select class="period-dropdown">
+                                                            <option value="2">2日</option>
+                                                            <option value="3">3日</option>
+                                                            <option value="7">7日</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-right-s-line"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <button type="button" class="btn btn-secondary ms-2">金額表示　kWh▶円</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <h5 class="mb-3 fw-bold tab-section-header">
+                                                <span>計測データ</span>
+                                            </h5>
+                                            
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div id="result-chart" style="min-height: 350px;">
+                                                        <!-- Chart will be rendered here -->
+                                                        <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                                            <div class="text-center">
+                                                                <i class="ri-bar-chart-2-line fs-48 text-muted"></i>
+                                                                <p class="mt-2">グラフエリア（ApexCharts等で実装）</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <h5 class="mb-3 fw-bold tab-section-header">
+                                                <span>積上データ</span>
+                                            </h5>
+                                            
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div id="result-chart" style="min-height: 350px;">
+                                                        <!-- Chart will be rendered here -->
+                                                        <div class="d-flex align-items-center justify-content-center h-100 text-muted">
+                                                            <div class="text-center">
+                                                                <i class="ri-bar-chart-2-line fs-48 text-muted"></i>
+                                                                <p class="mt-2">グラフエリア（ApexCharts等で実装）</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <div class="row g-3 statistics-container">
+                                                        <div class="col-4">
+                                                            <div class="row g-3">
+                                                                <div class="col-12">
+                                                                    <div class="text-center">
+                                                                        <p class="text-muted mb-1 fs-12">
+                                                                            <span class="legend-dot bg-success"></span>
+                                                                            <span class="fw-bold text-primary">受変電受電 電力量　kWh</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="row g-3">
+                                                                <div class="col-12">
+                                                                    <div class="text-center">
+                                                                        <p class="text-muted mb-1 fs-12">
+                                                                            <span class="legend-dot bg-danger"></span>
+                                                                            <span class="fw-bold text-primary">生産量　PC</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="row g-3">
+                                                                <div class="col-12">
+                                                                    <div class="text-center">
+                                                                        <p class="text-muted mb-1 fs-12">
+                                                                            <span class="legend-dot bg-primary"></span>
+                                                                            <span class="fw-bold text-primary">原単位率　kWh/PC</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="row g-3 statistics-container">
+                                                        <div class="d-flex justify-content-end gap-2">
+                                                            <button type="button" class="btn btn-outline-secondary">CSV出力</button>
+                                                            <button type="button" class="btn btn-outline-secondary">グラフ設定</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            @@include("partials/footer.html")
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    @@include("partials/vendor-scripts.html")
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>

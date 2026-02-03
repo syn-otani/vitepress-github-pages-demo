@@ -1,0 +1,242 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "トレンドグラフ"})
+
+    @@include("partials/head-css.html")
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html", {"activePage": "trend-graph"})
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Left: Page Title with Icon -->
+                            <div class="d-flex align-items-center">
+                                <i class="ri-line-chart-line me-2 fs-20 text-primary"></i>
+                                <h5 class="page-title mb-0">トレンドグラフ</h5>
+                            </div>
+                            <!-- Right: Alert Buttons -->
+                            <div class="d-flex align-items-center page-alerts">
+                                <i class="bx bxs-volume-full me-3 volume-icon"></i>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-1">1段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-2">2段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-high">高負荷警報</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-disable">調整不能</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Graph Card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <!-- 監視グラフ Tab -->
+                                        <div class="tab-pane active" id="monitorGraph" role="tabpanel">
+                                            <!-- Controls Row -->
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-2">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="01" selected>1：検査設定</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-left-s-line"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-left-s-line"></i>
+                                                        </button>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <input type="time" class="form-control form-control-sm" style="width: auto;" value="00:00">
+                                                        <select class="form-select group-select" style="width: auto;">
+                                                            <option value="24" selected>24時間</option>
+                                                            <option value="36">36時間</option>
+                                                            <option value="48">48時間</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-right-s-line"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-right-s-line"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="d-flex justify-content-end gap-2">
+                                                        <button type="button" class="btn btn-primary btn-lg" id="groupRegisterBtn">グループ登録</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Stats Row -->
+                                            <div class="row g-3 mb-4">
+                                                <div class="col">
+                                                    <div class="text-center">
+                                                        <p class="text-muted mb-1 fs-11">指定時間</p>
+                                                        <h4 class="mb-0"><span class="fw-bold">2025/08/06 07:06</span></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div id="monitor-chart">
+                                                        <img src="assets/images/enemon/分析グラフ.png" alt="分析グラフ" class="img-fluid w-100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Statistics Cards -->
+                                            <div class="row mt-4">
+                                                <div class="col-12">
+                                                    <div class="row g-0" style="border: 2px dashed #dee2e6;">
+                                                        <!-- Row 1, Card 1: 高圧受変電受電電流(S) -->
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/08/06</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">高圧受変電受電電流(S)</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">6.2 <small style="font-size: 12px;">A</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Row 1, Card 2: 高圧受変電受電電圧(R-T) -->
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/08/06</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-danger" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">高圧受変電受電電圧(R-T)</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">1.00 <small style="font-size: 12px;">kV</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Row 1, Card 3: 高圧受変電受電電力 -->
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/08/06</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; background-color: #6f42c1;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">高圧受変電受電電力</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">0 <small style="font-size: 12px;">kW</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Row 1, Card 4: 変台3-1受電相電流 -->
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/08/06</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-success" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変台3-1受電相電流</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">45 <small style="font-size: 12px;">A</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Row 2, Card 1: 高速データロガー高速データ1 -->
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/08/06</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-warning" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">高速データロガー高速データ1</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;"><small style="font-size: 12px;">KW</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Row 2, Card 2: 系統1RN -->
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/08/06</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-info" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">系統1RN</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">979 <small style="font-size: 12px;">V</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Row 2, Card 3: 1Mon1_A -->
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/08/06</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; background-color: #6f42c1;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">1Mon1_A</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">79156</span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Row 2, Card 4: (空) -->
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/08/06</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; background-color: #fd7e14;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;"></span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            @@include("partials/footer.html")
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    @@include("partials/vendor-scripts.html")
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>

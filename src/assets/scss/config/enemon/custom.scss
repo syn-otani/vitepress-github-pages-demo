@@ -1,0 +1,1212 @@
+/*
+Template Name: EneMon - Energy Monitoring System
+File: Custom Css File
+*/
+
+// EneMon Theme Colors
+$enemon-primary: #018BD5;
+$enemon-primary-light: #E8F4FC;
+$enemon-bg: #E8F4FC;
+
+// ========================================
+// Login Page Styles
+// ========================================
+.enemon-login-page {
+    background-color: $enemon-bg;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+// Background decorations - Donut style
+.login-bg-decoration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+
+    .decoration-top {
+        position: absolute;
+        top: -300px;
+        left: -5%;
+        width: 750px;
+        height: 750px;
+        border: 160px solid $enemon-primary;
+        border-radius: 50%;
+        background: transparent;
+    }
+
+    .decoration-bottom {
+        position: absolute;
+        bottom: -350px;
+        right: -50px;
+        width: 750px;
+        height: 750px;
+        border: 180px solid #fff;
+        border-radius: 50%;
+        background: transparent;
+    }
+}
+
+// Login wrapper
+.login-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1350px;
+    padding: 20px;
+}
+
+// Login card
+.login-card {
+    background-color: #fff;
+    border-radius: 24px;
+    box-shadow: 0 15px 80px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+// Left side - Branding
+.login-brand-section {
+    padding: 40px 60px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .brand-text {
+        .brand-subtitle {
+            font-size: 2rem;
+            font-weight: 500;
+            color: $enemon-primary;
+            letter-spacing: 0.15em;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        .brand-title {
+            font-size: 6rem;
+            font-weight: 700;
+            color: $enemon-primary;
+            letter-spacing: 0.05em;
+            margin-top: 2rem;
+            margin-bottom: 0;
+        }
+
+        .brand-logo {
+            width: 450px;
+            height: auto;
+            margin-top: 1.5rem;
+        }
+    }
+}
+
+// Right side - Login Form
+.login-form-section {
+    padding: 35px 60px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .form-header {
+        margin-bottom: 25px;
+
+        .form-title {
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: $enemon-primary;
+            margin-bottom: 4px;
+        }
+
+        .form-subtitle {
+            font-size: 0.9375rem;
+            color: #999;
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Login form
+.login-form {
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-label {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .input-with-icon {
+        position: relative;
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+            font-size: 1rem;
+            z-index: 1;
+        }
+
+        .form-control {
+            padding-left: 44px;
+            height: 48px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9375rem;
+
+            &::placeholder {
+                color: #bbb;
+            }
+
+            &:focus {
+                border-color: $enemon-primary;
+                box-shadow: 0 0 0 3px rgba($enemon-primary, 0.1);
+            }
+        }
+    }
+
+    .btn-login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 48px;
+        background-color: $enemon-primary;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-top: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        text-decoration: none;
+
+        &:hover {
+            background-color: darken($enemon-primary, 8%);
+            color: #fff;
+        }
+
+        &:active {
+            background-color: darken($enemon-primary, 12%);
+        }
+    }
+}
+
+// Bottom illustration
+.login-illustration {
+    width: 100%;
+    padding: 20px 40px 30px;
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+}
+
+// Responsive
+@media (max-width: 991.98px) {
+    .login-wrapper {
+        max-width: 500px;
+    }
+
+    .login-brand-section {
+        padding: 30px;
+        text-align: center;
+
+        .brand-text {
+            .brand-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        .brand-illustration {
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .login-form-section {
+        padding: 30px;
+    }
+
+    .login-bg-decoration {
+        .decoration-top {
+            width: 700px;
+            height: 700px;
+            border-width: 120px;
+            top: -300px;
+            left: -100px;
+        }
+
+        .decoration-bottom {
+            width: 800px;
+            height: 800px;
+            border-width: 140px;
+            bottom: -350px;
+            right: -100px;
+        }
+    }
+}
+
+@media (max-width: 575.98px) {
+    .login-brand-section {
+        padding: 25px;
+
+        .brand-text {
+            .brand-subtitle {
+                font-size: 1rem;
+            }
+
+            .brand-title {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .login-form-section {
+        padding: 25px;
+    }
+}
+
+// ========================================
+// Sidebar Styles - EneMon Blue Theme
+// ========================================
+.enemon-sidebar {
+    background-color: $enemon-primary !important;
+    border-right: none !important;
+
+    // CSS変数の上書き
+    --vz-vertical-menu-item-color: rgba(255, 255, 255, 0.6);
+    --vz-vertical-menu-item-hover-color: rgba(255, 255, 255, 0.8);
+    --vz-vertical-menu-item-active-color: #fff;
+    --vz-vertical-menu-sub-item-color: rgba(255, 255, 255, 0.6);
+    --vz-vertical-menu-sub-item-hover-color: rgba(255, 255, 255, 0.8);
+    --vz-vertical-menu-sub-item-active-color: #fff;
+
+    .navbar-brand-box {
+        background-color: $enemon-primary;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .enemon-logo {
+        padding: 10px 0;
+        text-align: left;
+
+        .logo-subtitle {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: 0.15em;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        .logo-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.05em;
+            margin-top: 0.75rem;
+        }
+
+        .logo-img {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            margin-top: 1rem;
+        }
+    }
+
+    .logo-text-sm {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.1;
+        text-align: center;
+    }
+
+    #scrollbar {
+        background-color: $enemon-primary;
+
+        .container-fluid {
+            background-color: $enemon-primary;
+        }
+    }
+
+    .navbar-nav {
+        // Menu icon for custom images
+        .menu-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        // Main menu items (大分類)
+        > .nav-item > .nav-link.menu-link {
+            font-weight: 500 !important;
+            font-size: 1.1rem !important;
+            padding: 0.75rem 1.5rem !important;
+        }
+
+        // Submenu dropdown
+        .menu-dropdown {
+            background-color: transparent;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        // Submenu nav links (各メニュー)
+        .nav-sm .nav-link {
+            font-size: 0.9rem !important;
+            padding: 0.5rem 1rem 0.5rem 1rem !important;
+            line-height: 1.4;
+            display: block !important;
+            flex-wrap: wrap !important;
+
+            .d-block {
+                display: block !important;
+                width: 100% !important;
+
+                i {
+                    margin-right: 0 !important;
+                    width: auto !important;
+                    min-width: auto !important;
+                    padding-right: 0.2rem !important;
+                }
+            }
+        }
+
+        // サブメニューのleft
+        .nav-sm .nav-link {
+            margin-left: 30px !important;
+        }
+
+        // Submenu container
+        .nav-sm {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    }
+
+    // 大分類メニューの色（ホバー）
+    .navbar-nav > .nav-item > a.nav-link.menu-link:hover {
+        color: #fff !important;
+        background-color: rgba(255, 255, 255, 0.05);
+        font-weight: 700 !important;
+    }
+    .navbar-nav > .nav-item > a.nav-link.menu-link:hover i {
+        color: #fff !important;
+    }
+
+    // サブメニューの色（非アクティブ）
+    .navbar-nav .nav-sm .nav-link {
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+
+    // サブメニューの色（アクティブ）
+    .navbar-nav .nav-sm .nav-link.active {
+        color: #fff !important;
+        background-color: transparent !important;
+        border-radius: 0;
+    }
+
+    // アクティブなサブメニューの親liに背景を設定
+    .navbar-nav .nav-sm .nav-item:has(.nav-link.active) {
+        background-color: #007ec1;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+
+        .nav-link.active {
+            margin-top: 0 !important;
+            padding-top: 0.5rem !important;
+        }
+    }
+
+    // 最初のサブメニュー項目の上余白を削除
+    .navbar-nav .nav-sm .nav-item:first-child {
+        margin-top: 0 !important;
+    }
+
+    // スクロールバーを非表示（スクロールは有効）
+    #scrollbar {
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none; // IE/Edge
+        &::-webkit-scrollbar {
+            display: none; // Chrome/Safari
+        }
+    }
+
+    // サブメニューの色（ホバー）
+    .navbar-nav .nav-sm .nav-link:hover {
+        color: #fff !important;
+        background-color: rgba(255, 255, 255, 0.15);
+        font-weight: 700 !important;
+    }
+
+    // Simplebar scrollbar styling
+    .simplebar-scrollbar::before {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .sidebar-background {
+        background-color: $enemon-primary;
+    }
+
+    // Vertical hover button
+    .btn-vertical-sm-hover {
+        color: #fff;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+}
+
+// Override for light sidebar setting - use blue anyway for enemon
+[data-sidebar="light"] .enemon-sidebar,
+[data-sidebar="dark"] .enemon-sidebar {
+    background-color: $enemon-primary !important;
+}
+
+// サイドバー縮小時のスタイル
+[data-sidebar-size="sm"] .enemon-sidebar,
+[data-sidebar-size="sm-hover"] .enemon-sidebar,
+.vertical-sidebar-enable .enemon-sidebar {
+    background-color: $enemon-primary !important;
+}
+
+[data-sidebar-size="sm"] .enemon-sidebar .navbar-brand-box,
+[data-sidebar-size="sm-hover"] .enemon-sidebar .navbar-brand-box {
+    background-color: $enemon-primary !important;
+}
+
+
+// サブメニュードロップダウンの背景色
+[data-sidebar-size="sm"] .enemon-sidebar .nav-item .menu-dropdown,
+[data-sidebar-size="sm-hover"] .enemon-sidebar .nav-item .menu-dropdown,
+.enemon-sidebar .nav-item .menu-dropdown {
+    background-color: $enemon-primary !important;
+}
+
+[data-sidebar-size="sm"] .enemon-sidebar .navbar-nav,
+[data-sidebar-size="sm-hover"] .enemon-sidebar .navbar-nav {
+    background-color: $enemon-primary !important;
+}
+
+// ホバー時のサブメニュー表示
+[data-sidebar-size="sm"] .enemon-sidebar .navbar-nav .nav-item:hover > .menu-dropdown,
+[data-sidebar-size="sm-hover"]:hover .enemon-sidebar .navbar-nav .nav-item:hover > .menu-dropdown {
+    background-color: $enemon-primary !important;
+}
+
+// ホバー時のメニュー項目背景色
+[data-sidebar-size="sm"] .enemon-sidebar .navbar-nav .nav-item:hover > .nav-link,
+[data-sidebar-size="sm-hover"] .enemon-sidebar .navbar-nav .nav-item:hover > .nav-link {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+// サブメニュー内のホバー
+[data-sidebar-size="sm"] .enemon-sidebar .navbar-nav .nav-sm .nav-link:hover,
+[data-sidebar-size="sm-hover"] .enemon-sidebar .navbar-nav .nav-sm .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+// サイドバー縮小時のサブメニューマージンをクリア
+[data-sidebar-size="sm"] .enemon-sidebar .navbar-nav .nav-sm .nav-link,
+[data-sidebar-size="sm-hover"] .enemon-sidebar .navbar-nav .nav-sm .nav-link {
+    margin-left: 0 !important;
+}
+
+
+// nav-item ホバー時の背景を透明に
+[data-sidebar-size="sm"] .enemon-sidebar .navbar-nav > .nav-item:hover,
+[data-sidebar-size="sm-hover"] .enemon-sidebar .navbar-nav > .nav-item:hover {
+    background-color: transparent !important;
+}
+
+// サブメニューの位置調整（大分類のホバー位置と揃える）
+[data-sidebar-size="sm"] .enemon-sidebar .navbar-nav .nav-item .menu-dropdown,
+[data-sidebar-size="sm-hover"] .enemon-sidebar .navbar-nav .nav-item .menu-dropdown {
+    top: 0 !important;
+}
+
+// ========================================
+// テンプレートのCSS上書き - 大分類メニュー色とフォントサイズ
+// ========================================
+// 大分類のフォントサイズ
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link {
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+}
+
+// デフォルトの展開時の色を上書き（非アクティブメニュー用）
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link[data-bs-toggle="collapse"][aria-expanded="false"],
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link[data-bs-toggle="collapse"][aria-expanded="true"] i,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link[data-bs-toggle="collapse"][aria-expanded="false"] i,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link i {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link[data-bs-toggle="collapse"][aria-expanded="true"]::after,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link[data-bs-toggle="collapse"][aria-expanded="false"]::after,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link::after {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+// アクティブメニューは白色＋Bold＋背景色
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active[data-bs-toggle="collapse"][aria-expanded="true"],
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active[data-bs-toggle="collapse"][aria-expanded="false"] {
+    color: #fff !important;
+    font-weight: 700 !important;
+    background-color: #00c9df !important;
+}
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active i,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active[data-bs-toggle="collapse"][aria-expanded="true"] i,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active[data-bs-toggle="collapse"][aria-expanded="false"] i {
+    color: #fff !important;
+}
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active::after,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active[data-bs-toggle="collapse"][aria-expanded="true"]::after,
+.navbar-menu.enemon-sidebar .navbar-nav .nav-link.menu-link.active[data-bs-toggle="collapse"][aria-expanded="false"]::after {
+    color: #fff !important;
+}
+
+// サブメニューのアクティブ
+.navbar-menu.enemon-sidebar .navbar-nav .nav-sm .nav-link.active {
+    font-weight: normal !important;
+}
+
+// ========================================
+// Topbar Styles
+// ========================================
+.topbar-tabs {
+    .nav-link {
+        color: #495057;
+        padding: 0.5rem 1rem;
+        border: none;
+        background: transparent;
+
+        &:hover {
+            color: $enemon-primary;
+        }
+
+        &.active {
+            color: $enemon-primary;
+            border-bottom: 2px solid $enemon-primary;
+        }
+    }
+}
+
+// Alert buttons in topbar
+.header-item {
+    .btn-soft-primary {
+        background-color: rgba($enemon-primary, 0.1);
+        color: $enemon-primary;
+        border: none;
+
+        &:hover {
+            background-color: $enemon-primary;
+            color: #fff;
+        }
+    }
+}
+
+// ========================================
+// Dashboard Card Styles
+// ========================================
+.card-summary {
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    .card-body {
+        padding: 1rem 1.25rem;
+    }
+
+    .text-primary {
+        color: #5a6067 !important;
+    }
+}
+
+// ========================================
+// Page Header Styles
+// ========================================
+.page-header {
+    background-color: #fff;
+    border-radius: 0;
+    padding: 0.75rem 1.5rem;
+    border-top: 2px solid #ced4da;
+    border-bottom: 2px solid #ced4da;
+    margin: -1.5rem -1.5rem 1rem -1.5rem;
+
+    .page-title {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: #495057;
+    }
+
+    .page-title-icon {
+        color: #5a6067;
+    }
+}
+
+.page-alerts {
+    .btn-alert {
+        margin-left: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        border-radius: 4px;
+        border: none;
+        background-color: #5a6067;
+        color: #fff;
+        min-width: 80px;
+        text-align: center;
+        letter-spacing: 0.1em;
+
+        &:hover {
+            background-color: darken(#5a6067, 10%);
+            color: #fff;
+        }
+    }
+
+    .btn-alert-1,
+    .btn-alert-2,
+    .btn-alert-high,
+    .btn-alert-disable {
+        background-color: #5a6067;
+        color: #fff;
+
+        &:hover {
+            background-color: darken(#5a6067, 10%);
+            color: #fff;
+        }
+    }
+}
+
+.progress-summary {
+    height: 18px;
+}
+
+.tab-section-header {
+    background-color: #e9ecef;
+    color: #5a6067;
+    padding: 0.75rem 1.5rem 0.75rem 3rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+// ========================================
+// Content Header Styles
+// ========================================
+.content-header {
+    background-color: transparent;
+    border-bottom: none;
+    padding: 0;
+}
+
+// タブ付きカードのスタイル
+.card:has(.content-header) {
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0 !important;
+
+    .card-body {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+        flex: none !important;
+
+        .tab-content {
+            // ビューポート高さからヘッダー、サマリーカード、タブヘッダー、フッターを引いた高さ
+            height: calc(100vh - 380px);
+            overflow-y: hidden;
+
+            .tab-pane {
+                height: 100%;
+                overflow: hidden;
+            }
+        }
+
+        #legacy-monitor-chart,
+        #monitor-chart {
+            img {
+                max-height: calc(100vh - 480px);
+                width: auto;
+                max-width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .tab-pane > .row {
+            margin-left: 1.25rem;
+            margin-right: 1.25rem;
+        }
+    }
+}
+
+// レスポンシブ対応
+@media (max-width: 1199.98px) {
+    .card:has(.content-header) .card-body .tab-content {
+        height: calc(100vh - 400px);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .card:has(.content-header) .card-body .tab-content {
+        height: calc(100vh - 420px);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .card:has(.content-header) .card-body .tab-content {
+        height: calc(100vh - 450px);
+    }
+}
+
+// card-bodyがフッターに被らないように
+.card {
+    flex: none !important;
+
+    .card-body {
+        flex: none !important;
+    }
+}
+
+.content-tabs {
+    border-bottom: none;
+    width: 100%;
+    display: flex;
+    background-color: var(--vz-body-bg, #f3f3f9);
+
+    .nav-item {
+        flex: 1;
+    }
+
+    .nav-link {
+        border: none;
+        background-color: #e9ecef;
+        color: #495057;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        width: 100%;
+        text-align: left;
+        border-radius: 12px 12px 0 0;
+
+        &:hover {
+            color: #333;
+            background-color: #dee2e6;
+        }
+
+        &.active {
+            color: #333;
+            background-color: #fff;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        i {
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.content-alerts {
+    .btn-alert {
+        margin-left: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
+        background-color: #fff;
+        color: #495057;
+
+        &:hover {
+            background-color: #f8f9fa;
+        }
+    }
+
+    .btn-alert-1 {
+        border-color: #ffc107;
+        color: #856404;
+        background-color: #fff3cd;
+
+        &:hover {
+            background-color: #ffe69c;
+        }
+    }
+
+    .btn-alert-2 {
+        border-color: #fd7e14;
+        color: #984c0c;
+        background-color: #ffe5d0;
+
+        &:hover {
+            background-color: #ffd3b0;
+        }
+    }
+
+    .btn-alert-high {
+        border-color: #dc3545;
+        color: #842029;
+        background-color: #f8d7da;
+
+        &:hover {
+            background-color: #f1aeb5;
+        }
+    }
+
+    .btn-alert-disable {
+        border-color: #6c757d;
+        color: #495057;
+        background-color: #e9ecef;
+
+        &:hover {
+            background-color: #ced4da;
+        }
+    }
+}
+
+// Graph Card Tabs
+.nav-tabs-custom {
+    border-bottom: none;
+
+    .nav-link {
+        border: none;
+        padding: 1rem 1.5rem;
+        color: #495057;
+        background-color: #f3f6f9;
+
+        &:hover {
+            color: $enemon-primary;
+        }
+
+        &.active {
+            color: $enemon-primary;
+            background-color: #fff;
+            border-bottom: 2px solid $enemon-primary;
+        }
+    }
+}
+
+// Nav Pills (Filter tabs)
+.nav-pills.nav-sm {
+    .nav-link {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.8125rem;
+        border-radius: 4px;
+        color: #495057;
+        background-color: #f3f6f9;
+        margin-right: 0.25rem;
+
+        &:hover {
+            color: $enemon-primary;
+        }
+
+        &.active {
+            background-color: $enemon-primary;
+            color: #fff;
+        }
+    }
+}
+
+// Chart Legend
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    display: inline-block;
+}
+
+.chart-legend {
+    .legend-item {
+        display: flex;
+        align-items: center;
+        font-size: 0.875rem;
+    }
+}
+
+.bg-purple {
+    background-color: #6559cc !important;
+}
+
+// Statistics Container
+.statistics-container {
+    height: 100%;
+    align-content: flex-start;
+    margin-top: 1.5rem;
+    gap: 0 !important;
+
+    .row {
+        gap: 0 !important;
+    }
+
+    .ms-checkbox-offset {
+        margin-left: calc(1em + 0.6rem);
+    }
+
+    .col-12 {
+        border: 2px dashed #dee2e6;
+        background-color: #f8f9fa;
+        padding: 1.5rem 0.75rem;
+        margin-top: 0;
+        margin-bottom: 0;
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+
+        &:not(:first-child) {
+            margin-top: -2px;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .text-center {
+            width: 100%;
+
+            p {
+                text-align: left;
+
+                &.text-center {
+                    text-align: center;
+                }
+
+                .fw-bold.text-primary {
+                    font-size: 0.9375rem;
+                }
+
+                .form-check-input {
+                    margin-left: 0;
+                }
+            }
+
+            h4 {
+                margin-top: 0.5rem;
+
+                &.text-end {
+                    padding-right: 1rem;
+                }
+
+                .fw-bold.text-primary {
+                    font-size: 1.25rem;
+                }
+            }
+        }
+    }
+
+    .col-6:last-child .col-12 {
+        border-left: none;
+    }
+}
+
+// ========================================
+// Primary Color Override
+// ========================================
+.btn-primary {
+    background-color: $enemon-primary;
+    border-color: $enemon-primary;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: darken($enemon-primary, 10%);
+        border-color: darken($enemon-primary, 10%);
+    }
+}
+
+.btn-outline-primary {
+    color: $enemon-primary;
+    border-color: $enemon-primary;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $enemon-primary;
+        border-color: $enemon-primary;
+        color: #fff;
+    }
+}
+
+.text-primary {
+    color: #5a6067 !important;
+}
+
+.bg-primary {
+    background-color: $enemon-primary !important;
+}
+
+// ========================================
+// Footer Styles
+// ========================================
+.footer {
+    display: flex;
+    align-items: center;
+}
+
+// ========================================
+// Page Content Styles
+// ========================================
+.page-content {
+    padding-bottom: 10px !important;
+}
+
+.main-content .card:last-child {
+    margin-bottom: 0.5rem;
+}
+
+// ========================================
+// Header Icon Styles (User & Maintenance)
+// ========================================
+.user-icon,
+.maintenance-icon,
+.volume-icon {
+    color: #5a6067 !important;
+    font-size: 1.5rem !important;
+}
+
+// ========================================
+// Help Button Styles
+// ========================================
+.btn-help {
+    background-color: #5a6067 !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    letter-spacing: 0.1em !important;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: darken(#5a6067, 10%) !important;
+        color: #fff !important;
+    }
+}
+
+// ========================================
+// Chart Tile Styles (Individual Power Monitoring)
+// ========================================
+.chart-tile {
+    background: #ffffff;
+    border: 1px solid rgba(42, 58, 74, 0.08);
+    border-radius: 8px;
+    padding: 0.75rem;
+    box-shadow: 0 1px 2px rgba(15, 34, 58, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: calc((100vh - 430px) / 2);
+    max-height: 280px;
+    min-height: 220px;
+}
+
+.chart-label-top {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #424d57;
+    margin: 0;
+}
+
+.chart-content-row {
+    display: flex;
+    flex: 1;
+    gap: 0.5rem;
+    min-height: 0;
+}
+
+.chart-stats-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3rem;
+    min-width: 90px;
+}
+
+.chart-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    font-size: 0.7rem;
+    white-space: nowrap;
+
+    .legend-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: inline-block;
+        margin-right: 0.2rem;
+    }
+
+    .stat-label {
+        color: #6c757d;
+        font-size: 0.65rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .stat-value {
+        font-weight: 600;
+        color: #424d57;
+        font-size: 0.8rem;
+
+        small {
+            font-weight: 400;
+            color: #6c757d;
+            font-size: 0.65rem;
+        }
+    }
+}
+
+.mini-chart-area {
+    flex: 1;
+    min-height: 120px;
+    border-radius: 6px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .chart-placeholder {
+        position: relative;
+        color: #8b97a6;
+        text-align: center;
+    }
+}

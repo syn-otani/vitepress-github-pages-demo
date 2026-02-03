@@ -1,0 +1,277 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "分析支援複合グラフ"})
+
+    @@include("partials/head-css.html")
+    
+    <style>
+        /* Custom styles for analysis page */
+        .form-select {
+            background-color: #0d99ff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .form-select:focus {
+            background-color: #0d99ff;
+            color: white;
+            box-shadow: none;
+        }
+        .form-select option {
+            background-color: white;
+            color: #212529;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html", {"activePage": "analysis-graph"})
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Left: Page Title with Icon -->
+                            <div class="d-flex align-items-center">
+                                <i class="ri-line-chart-line me-2 fs-20 text-primary"></i>
+                                <h5 class="page-title mb-0">分析支援複合グラフ</h5>
+                            </div>
+                            <!-- Right: Alert Buttons -->
+                            <div class="d-flex align-items-center page-alerts">
+                                <i class="bx bxs-volume-full me-3 volume-icon"></i>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-1">1段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-2">2段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-high">高負荷警報</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-disable">調整不能</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Graph Card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding: 2rem;">
+                                    <div class="tab-content">
+                                        <!-- 監視グラフ Tab -->
+                                        <div class="tab-pane active" id="monitorGraph" role="tabpanel">
+                                            <!-- Controls Row -->
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-2">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>001:グループ 01</option>
+                                                            <option value="group02">002:グループ 02</option>
+                                                            <option value="group03">003:グループ 03</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-left-s-line"></i>
+                                                        </button>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <select class="group-select">
+                                                            <option value="00" selected>00</option>
+                                                            <option value="01">01</option>
+                                                            <option value="02">02</option>
+                                                            <option value="03">03</option>
+                                                            <option value="04">04</option>
+                                                            <option value="05">05</option>
+                                                            <option value="06">06</option>
+                                                            <option value="07">07</option>
+                                                            <option value="08">08</option>
+                                                            <option value="09">09</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                            <option value="13">13</option>
+                                                            <option value="14">14</option>
+                                                            <option value="15">15</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                            <option value="19">19</option>
+                                                            <option value="20">20</option>
+                                                            <option value="21">21</option>
+                                                            <option value="22">22</option>
+                                                            <option value="23">23</option>
+                                                        </select>時
+                                                        <span class="mx-2">～</span>
+                                                        <select class="period-dropdown">
+                                                            <option value="2">2日</option>
+                                                            <option value="3">3日</option>
+                                                            <option value="7">7日</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="ri-arrow-right-s-line"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <button type="button" class="btn btn-secondary ms-2">金額表示　kWh▶円</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div id="monitor-chart">
+                                                        <img src="assets/images/enemon/分析グラフ.png" alt="分析グラフ" class="img-fluid w-100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row g-0" style="border: 2px dashed #dee2e6;">
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/11/22</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変圧器2次No.2TR2次 電圧</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">99999 <small style="font-size: 12px;">kv</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/11/22</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変圧器2次No.2TR2次 電圧</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">99999 <small style="font-size: 12px;">kv</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/11/22</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変圧器2次No.2TR2次 電圧</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">99999 <small style="font-size: 12px;">kv</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/11/22</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変圧器2次No.2TR2次 電圧</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">99999 <small style="font-size: 12px;">kv</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/11/22</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変圧器2次No.2TR2次 電圧</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">99999 <small style="font-size: 12px;">kv</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/11/22</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変圧器2次No.2TR2次 電圧</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">99999 <small style="font-size: 12px;">kv</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/11/22</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変圧器2次No.2TR2次 電圧</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">99999 <small style="font-size: 12px;">kv</small></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3" style="border: 2px dashed #dee2e6; padding: 15px; min-height: 100px; position: relative; display: flex; flex-direction: column;">
+                                                            <div style="position: absolute; top: 15px; left: 15px;">
+                                                                <p class="text-muted mb-0 fs-11" style="font-size: 11px; margin-bottom: 0;">2025/11/22</p>
+                                                            </div>
+                                                            <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; display: flex; align-items: center; gap: 8px;">
+                                                                <input type="checkbox" class="form-check-input" style="width: 16px; height: 16px; border: 1px solid #dee2e6; background-color: white; flex-shrink: 0;">
+                                                                <span class="legend-dot bg-primary" style="width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;"></span>
+                                                                <span style="font-size: 10px; flex: 1; margin-left: 8px; white-space: nowrap;">変圧器2次No.2TR2次 電圧</span>
+                                                                <span style="font-size: 24px; font-weight: bold; flex-shrink: 0; margin-left: auto;">99999 <small style="font-size: 12px;">kv</small></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Bottom Controls -->
+                                            <div class="row mt-4">
+                                                <div class="col-12">
+                                                    <div class="d-flex justify-content-end gap-2">
+                                                        <button type="button" class="btn btn-outline-secondary">CSV出力</button>
+                                                        <button type="button" class="btn btn-outline-secondary">グラフ設定</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            @@include("partials/footer.html")
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    @@include("partials/vendor-scripts.html")
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>

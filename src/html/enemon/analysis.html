@@ -1,0 +1,1436 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "分析支援グラフ表示設定"})
+
+    @@include("partials/head-css.html")
+
+    <style>
+        /* Custom styles for analysis page */
+        .group-select {
+            background-color: #0d99ff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .group-select:focus {
+            background-color: #0d99ff;
+            color: white;
+            box-shadow: none;
+        }
+        .group-select option {
+            background-color: white;
+            color: #212529;
+        }
+        .copy-option {
+            background-color: white;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin: 0 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+        }
+        .copy-option:has(input:checked) {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+        .copy-option input[type="radio"] {
+            cursor: pointer;
+        }
+        .copy-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .copy-button:hover {
+            background-color: #5a6268;
+            color: white;
+        }
+        .detail-setting-label {
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .detail-toggle-label {
+            color: #6c757d;
+            font-size: 12px;
+            font-weight: 400;
+        }
+        .analysis-table {
+            font-size: 13px;
+        }
+        .analysis-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 8px 6px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .analysis-table td {
+            padding: 8px 6px;
+            vertical-align: middle;
+            border: 1px solid #dee2e6;
+        }
+        .analysis-table td.text-center {
+            text-align: center;
+        }
+        .analysis-table td.text-center input[type="number"] {
+            margin: 0 auto;
+            display: block;
+        }
+        .analysis-table tbody tr:nth-child(odd) {
+            background-color: #e7f3ff;
+        }
+        .line-indicator {
+            display: inline-block;
+            width: 30px;
+            height: 3px;
+            vertical-align: middle;
+        }
+        .date-input-group {
+            background-color: #495057;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+        .period-dropdown {
+            background-color: #495057;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        @@include("partials/topbar.html")
+
+        @@include("partials/sidebar.html")
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Left: Page Title with Icon -->
+                            <div class="d-flex align-items-center">
+                                <i class="ri-settings-3-line me-2 fs-20 text-primary"></i>
+                                <h5 class="page-title mb-0">分析支援グラフ表示設定</h5>
+                            </div>
+                            <!-- Right: Alert Buttons -->
+                            <div class="d-flex align-items-center page-alerts">
+                                <i class="bx bxs-volume-full me-3 volume-icon"></i>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-1">1段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-2">2段警告</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-high">高負荷警報</button>
+                                <button type="button" class="btn btn-sm btn-alert btn-alert-disable">調整不能</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Card -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header content-header">
+                                    <!-- Graph Tabs -->
+                                    <ul class="nav nav-tabs content-tabs mb-0" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#dayGraph" role="tab">
+                                                <i class="ri-calendar-line me-1"></i> 日グラフ
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#monthGraph" role="tab">
+                                                <i class="ri-calendar-2-line me-1"></i> 月グラフ
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#yearGraph" role="tab">
+                                                <i class="ri-calendar-check-line me-1"></i> 年グラフ
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <!-- 日グラフ Tab -->
+                                        <div class="tab-pane active" id="dayGraph" role="tabpanel">
+                                            <!-- Controls Row -->
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-3">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Center: Copy Settings -->
+                                                <div class="col-md-6 text-center">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ項目コピー</span>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopy" value="month2day" class="me-1">
+                                                            月グラフ→日グラフ
+                                                        </label>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopy" value="year2day" class="me-1">
+                                                            年グラフ→日グラフ
+                                                        </label>
+                                                        <button type="button" class="copy-button ms-3">コピー</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Right: Detail Settings -->
+                                                <div class="col-md-3 text-end">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ詳細設定</span>
+                                                        <span class="detail-toggle-label me-2">ON</span>
+                                                        <div class="form-check form-switch mb-0">
+                                                            <input class="form-check-input" type="checkbox" id="detailSwitch" checked>
+                                                        </div>
+                                                        <span class="detail-toggle-label ms-2">OFF</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Data Table -->
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 35px;" rowspan="2">No.</th>
+                                                            <th style="width: 50px;" rowspan="2">ライン</th>
+                                                            <th style="width: 95px;" rowspan="2">コード No.</th>
+                                                            <th style="width: 155px;" rowspan="2">設備名称</th>
+                                                            <th style="width: 110px;" rowspan="2">機器名称</th>
+                                                            <th style="width: 50px;" rowspan="2">単位</th>
+                                                            <th style="width: 60px;" rowspan="2">単位<br>換算</th>
+                                                            <th style="width: 45px;" rowspan="2">接分<br>種別</th>
+                                                            <th style="width: 90px;" rowspan="2">集計<br>種別</th>
+                                                            <th style="width: 45px;" rowspan="2">累積</th>
+                                                            <th style="width: 90px;" rowspan="2">グラフ<br>種別</th>
+                                                            <th colspan="3">スケール</th>
+                                                            <th style="width: 80px;" rowspan="2">目標<br>ライン</th>
+                                                            <th style="width: 120px;" rowspan="2">指定開始日<br>設定</th>
+                                                            <th style="width: 130px;" rowspan="2">詳細<br>グラフ</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width: 45px;">自動</th>
+                                                            <th style="width: 45px;">最小</th>
+                                                            <th style="width: 45px;">最大</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center">1</td>
+                                                            <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                            <td><div class="d-flex justify-content-between align-items-center">DLL03P09 <i class="ri-file-copy-line"></i></div></td>
+                                                            <td>0</td>
+                                                            <td>test4</td>
+                                                            <td class="text-center">kwt</td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>折線</option>
+                                                                    <option>棒</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                    <option>グループ03</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">2</td>
+                                                            <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                            <td><div class="d-flex justify-content-between align-items-center">EC02-1 <i class="ri-file-copy-line"></i></div></td>
+                                                            <td>変台 3-1 受電</td>
+                                                            <td>受電側電力量</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>折線</option>
+                                                                    <option>棒</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                    <option>グループ03</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">3</td>
+                                                            <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                            <td><div class="d-flex justify-content-between align-items-center">EC02-94 <i class="ri-file-copy-line"></i></div></td>
+                                                            <td>変台 3-3 No.3 動力盤</td>
+                                                            <td>受電側電力量</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>折線</option>
+                                                                    <option>棒</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                    <option>グループ03</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">4</td>
+                                                            <td class="text-center"><span class="line-indicator bg-info"></span></td>
+                                                            <td><div class="d-flex justify-content-between align-items-center">EC02-114 <i class="ri-file-copy-line"></i></div></td>
+                                                            <td>変台 3-3 No.3 電灯盤</td>
+                                                            <td>受電側電力量</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>折線</option>
+                                                                    <option>棒</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                    <option>グループ03</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">5</td>
+                                                            <td class="text-center"><span class="line-indicator bg-warning"></span></td>
+                                                            <td><div class="d-flex justify-content-between align-items-center">EC02-94 <i class="ri-file-copy-line"></i></div></td>
+                                                            <td>変台 3-3 No.3 動力盤</td>
+                                                            <td>受電側電力量</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>折線</option>
+                                                                    <option>棒</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                    <option>グループ03</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">6</td>
+                                                            <td class="text-center"><span class="line-indicator bg-secondary"></span></td>
+                                                            <td><div class="d-flex justify-content-between align-items-center">EC02-114 <i class="ri-file-copy-line"></i></div></td>
+                                                            <td>変台 3-3 No.3 電灯盤</td>
+                                                            <td>受電側電力</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>折線</option>
+                                                                    <option>棒</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                    <option>グループ03</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">7</td>
+                                                            <td class="text-center"><span class="line-indicator bg-purple"></span></td>
+                                                            <td><div class="d-flex justify-content-between align-items-center">SEC0001 <i class="ri-file-copy-line"></i></div></td>
+                                                            <td>部門</td>
+                                                            <td>てすと</td>
+                                                            <td class="text-center">kWh</td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>折線</option>
+                                                                    <option>棒</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                    <option>グループ03</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">8</td>
+                                                            <td class="text-center"><span class="line-indicator bg-dark"></span></td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>合計</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox"></td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>折線</option>
+                                                                    <option>棒</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center"><input type="checkbox" checked></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <select class="form-select form-select-sm">
+                                                                    <option>グループ01</option>
+                                                                    <option>グループ02</option>
+                                                                    <option>グループ03</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Bottom Controls -->
+                                            <div class="row mt-4">
+                                                <div class="col-md-6">
+                                                    <div class="d-flex gap-2">
+                                                        <button type="button" class="btn btn-secondary">削除</button>
+                                                        <button type="button" class="btn btn-secondary">更新</button>
+                                                        <button type="button" class="btn btn-outline-secondary">キャンセル</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-end align-items-center gap-2">
+                                                        <span class="me-2">グラフ表示期間</span>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <span class="mx-2">-</span>
+                                                        <select class="period-dropdown">
+                                                            <option value="2">2日</option>
+                                                            <option value="3">3日</option>
+                                                            <option value="7">7日</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-secondary ms-2">グラフ表示</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 月グラフ Tab -->
+                                        <div class="tab-pane" id="monthGraph" role="tabpanel">
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-3">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Center: Copy Settings -->
+                                                <div class="col-md-6 text-center">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ項目コピー</span>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopy" value="month2day" class="me-1">
+                                                            月グラフ→日グラフ
+                                                        </label>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopy" value="year2day" class="me-1">
+                                                            年グラフ→日グラフ
+                                                        </label>
+                                                        <button type="button" class="copy-button ms-3">コピー</button>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Right: Detail Settings -->
+                                                <div class="col-md-3 text-end">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ詳細設定</span>
+                                                        <span class="detail-toggle-label me-2">ON</span>
+                                                        <div class="form-check form-switch mb-0">
+                                                            <input class="form-check-input" type="checkbox" id="detailSwitch" checked>
+                                                        </div>
+                                                        <span class="detail-toggle-label ms-2">OFF</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Data Table -->
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 35px;" rowspan="2">No.</th>
+                                                        <th style="width: 50px;" rowspan="2">ライン</th>
+                                                        <th style="width: 95px;" rowspan="2">コード No.</th>
+                                                        <th style="width: 155px;" rowspan="2">設備名称</th>
+                                                        <th style="width: 110px;" rowspan="2">機器名称</th>
+                                                        <th style="width: 50px;" rowspan="2">単位</th>
+                                                        <th style="width: 60px;" rowspan="2">単位<br>換算</th>
+                                                        <th style="width: 45px;" rowspan="2">接分<br>種別</th>
+                                                        <th style="width: 90px;" rowspan="2">集計<br>種別</th>
+                                                        <th style="width: 45px;" rowspan="2">累積</th>
+                                                        <th style="width: 90px;" rowspan="2">グラフ<br>種別</th>
+                                                        <th colspan="3">スケール</th>
+                                                        <th style="width: 80px;" rowspan="2">目標<br>ライン</th>
+                                                        <th style="width: 120px;" rowspan="2">指定開始日<br>設定</th>
+                                                        <th style="width: 130px;" rowspan="2">詳細<br>グラフ</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 45px;">自動</th>
+                                                        <th style="width: 45px;">最小</th>
+                                                        <th style="width: 45px;">最大</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="text-center">1</td>
+                                                        <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">DLL03P09 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>0</td>
+                                                        <td>test4</td>
+                                                        <td class="text-center">kwt</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">2</td>
+                                                        <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-1 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-1 受電</td>
+                                                        <td>受電側電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">3</td>
+                                                        <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-94 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-3 No.3 動力盤</td>
+                                                        <td>受電側電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">4</td>
+                                                        <td class="text-center"><span class="line-indicator bg-info"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-114 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-3 No.3 電灯盤</td>
+                                                        <td>受電側電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">5</td>
+                                                        <td class="text-center"><span class="line-indicator bg-warning"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-94 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-3 No.3 動力盤</td>
+                                                        <td>受電側電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">6</td>
+                                                        <td class="text-center"><span class="line-indicator bg-secondary"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-114 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-3 No.3 電灯盤</td>
+                                                        <td>受電側電力</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">7</td>
+                                                        <td class="text-center"><span class="line-indicator bg-purple"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">SEC0001 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>部門</td>
+                                                        <td>てすと</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">8</td>
+                                                        <td class="text-center"><span class="line-indicator bg-dark"></span></td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                            <!-- Bottom Controls -->
+                                            <div class="row mt-4">
+                                                <div class="col-md-6">
+                                                    <div class="d-flex gap-2">
+                                                        <button type="button" class="btn btn-secondary">削除</button>
+                                                        <button type="button" class="btn btn-secondary">更新</button>
+                                                        <button type="button" class="btn btn-outline-secondary">キャンセル</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-end align-items-center gap-2">
+                                                        <span class="me-2">グラフ表示期間</span>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <span class="mx-2">-</span>
+                                                        <select class="period-dropdown">
+                                                            <option value="2">2日</option>
+                                                            <option value="3">3日</option>
+                                                            <option value="7">7日</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-secondary ms-2">グラフ表示</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 年グラフ Tab -->
+                                        <div class="tab-pane" id="yearGraph" role="tabpanel">
+                                            <div class="row mb-4 align-items-center">
+                                                <!-- Left: Group Selection -->
+                                                <div class="col-md-3">
+                                                    <div class="d-flex gap-2">
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                        <select class="form-select group-select">
+                                                            <option value="group01" selected>グループ 01</option>
+                                                            <option value="group02">グループ 02</option>
+                                                            <option value="group03">グループ 03</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Center: Copy Settings -->
+                                                <div class="col-md-6 text-center">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ項目コピー</span>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopy" value="month2day" class="me-1">
+                                                            月グラフ→日グラフ
+                                                        </label>
+                                                        <label class="copy-option">
+                                                            <input type="radio" name="graphCopy" value="year2day" class="me-1">
+                                                            年グラフ→日グラフ
+                                                        </label>
+                                                        <button type="button" class="copy-button ms-3">コピー</button>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Right: Detail Settings -->
+                                                <div class="col-md-3 text-end">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <span class="detail-setting-label me-3">グラフ詳細設定</span>
+                                                        <span class="detail-toggle-label me-2">ON</span>
+                                                        <div class="form-check form-switch mb-0">
+                                                            <input class="form-check-input" type="checkbox" id="detailSwitch" checked>
+                                                        </div>
+                                                        <span class="detail-toggle-label ms-2">OFF</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Data Table -->
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered analysis-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 35px;" rowspan="2">No.</th>
+                                                        <th style="width: 50px;" rowspan="2">ライン</th>
+                                                        <th style="width: 95px;" rowspan="2">コード No.</th>
+                                                        <th style="width: 155px;" rowspan="2">設備名称</th>
+                                                        <th style="width: 110px;" rowspan="2">機器名称</th>
+                                                        <th style="width: 50px;" rowspan="2">単位</th>
+                                                        <th style="width: 60px;" rowspan="2">単位<br>換算</th>
+                                                        <th style="width: 45px;" rowspan="2">接分<br>種別</th>
+                                                        <th style="width: 90px;" rowspan="2">集計<br>種別</th>
+                                                        <th style="width: 45px;" rowspan="2">累積</th>
+                                                        <th style="width: 90px;" rowspan="2">グラフ<br>種別</th>
+                                                        <th colspan="3">スケール</th>
+                                                        <th style="width: 80px;" rowspan="2">目標<br>ライン</th>
+                                                        <th style="width: 120px;" rowspan="2">指定開始日<br>設定</th>
+                                                        <th style="width: 130px;" rowspan="2">詳細<br>グラフ</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 45px;">自動</th>
+                                                        <th style="width: 45px;">最小</th>
+                                                        <th style="width: 45px;">最大</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="text-center">1</td>
+                                                        <td class="text-center"><span class="line-indicator bg-primary"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">DLL03P09 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>0</td>
+                                                        <td>test4</td>
+                                                        <td class="text-center">kwt</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">2</td>
+                                                        <td class="text-center"><span class="line-indicator bg-danger"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-1 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-1 受電</td>
+                                                        <td>受電側電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">3</td>
+                                                        <td class="text-center"><span class="line-indicator bg-success"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-94 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-3 No.3 動力盤</td>
+                                                        <td>受電側電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">4</td>
+                                                        <td class="text-center"><span class="line-indicator bg-info"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-114 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-3 No.3 電灯盤</td>
+                                                        <td>受電側電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">5</td>
+                                                        <td class="text-center"><span class="line-indicator bg-warning"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-94 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-3 No.3 動力盤</td>
+                                                        <td>受電側電力量</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">6</td>
+                                                        <td class="text-center"><span class="line-indicator bg-secondary"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">EC02-114 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>変台 3-3 No.3 電灯盤</td>
+                                                        <td>受電側電力</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">7</td>
+                                                        <td class="text-center"><span class="line-indicator bg-purple"></span></td>
+                                                        <td><div class="d-flex justify-content-between align-items-center">SEC0001 <i class="ri-file-copy-line"></i></div></td>
+                                                        <td>部門</td>
+                                                        <td>てすと</td>
+                                                        <td class="text-center">kWh</td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">8</td>
+                                                        <td class="text-center"><span class="line-indicator bg-dark"></span></td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><div class="d-flex justify-content-end"><i class="ri-file-copy-line"></i></div></td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>合計</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox"></td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>折線</option>
+                                                                <option>棒</option>
+                                                            </select>
+                                                        </td>
+                                                        <td class="text-center"><input type="checkbox" checked></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <input type="number" class="form-control form-control-sm" style="width: 60px;" value="0.0">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input type="date" class="form-control form-control-sm" value="2025-06-05">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="form-select form-select-sm">
+                                                                <option>グループ01</option>
+                                                                <option>グループ02</option>
+                                                                <option>グループ03</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                            <!-- Bottom Controls -->
+                                            <div class="row mt-4">
+                                                <div class="col-md-6">
+                                                    <div class="d-flex gap-2">
+                                                        <button type="button" class="btn btn-secondary">削除</button>
+                                                        <button type="button" class="btn btn-secondary">更新</button>
+                                                        <button type="button" class="btn btn-outline-secondary">キャンセル</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="d-flex justify-content-end align-items-center gap-2">
+                                                        <span class="me-2">グラフ表示期間</span>
+                                                        <input type="date" class="form-control form-control-sm" style="width: auto;" value="2025-08-05">
+                                                        <span class="mx-2">-</span>
+                                                        <select class="period-dropdown">
+                                                            <option value="2">2日</option>
+                                                            <option value="3">3日</option>
+                                                            <option value="7">7日</option>
+                                                        </select>
+                                                        <button type="button" class="btn btn-secondary ms-2">グラフ表示</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            @@include("partials/footer.html")
+
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    @@include("partials/vendor-scripts.html")
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>
+

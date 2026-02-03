@@ -1,0 +1,26 @@
+/**
+ * VitePress カスタムスタイル
+ */
+
+:root {
+  /* レイアウト最大幅を解除して左端から表示 */
+  --vp-layout-max-width: 100%;
+}
+
+/* コンテンツ幅を100%に拡張 */
+.VPDoc .content-container {
+  max-width: 100% !important;
+}
+
+/* 画像ズーム */
+.main img {
+  cursor: zoom-in;
+}
+
+.medium-zoom-overlay {
+  z-index: 100;
+}
+
+.medium-zoom-image--opened {
+  z-index: 101;
+}

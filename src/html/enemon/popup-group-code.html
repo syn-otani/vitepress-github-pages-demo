@@ -1,0 +1,258 @@
+@@include("partials/main.html")
+
+<head>
+
+    @@include("partials/title-meta.html", {"title": "コードNo. 選択"})
+
+    @@include("partials/head-css.html")
+
+    <style>
+        /* Custom styles for popup */
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .popup-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .popup-header {
+            background-color: #0d99ff;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .popup-header h5 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+        }
+        .popup-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-close:hover {
+            opacity: 0.8;
+        }
+        .popup-body {
+            padding: 20px;
+        }
+        .search-section {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .search-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .search-row:last-child {
+            margin-bottom: 0;
+        }
+        .search-label {
+            min-width: 80px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .search-input {
+            flex: 1;
+            max-width: 300px;
+        }
+        .code-table {
+            font-size: 13px;
+        }
+        .code-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 8px 6px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .code-table td {
+            padding: 8px 6px;
+            vertical-align: middle;
+            border: 1px solid #dee2e6;
+        }
+        .code-table tbody tr:nth-child(odd) {
+            background-color: #e7f3ff;
+        }
+        .code-table tbody tr:hover {
+            background-color: #d0e9ff;
+            cursor: pointer;
+        }
+        .popup-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="popup-container">
+        <!-- Popup Header -->
+        <div class="popup-header">
+            <h5>コードNo. 選択</h5>
+            <button type="button" class="popup-close" onclick="window.close()">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+
+        <!-- Popup Body -->
+        <div class="popup-body">
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-row">
+                    <label class="search-label">種別</label>
+                    <select class="form-select form-select-sm search-input">
+                        <option value="">選択してください</option>
+                        <option value="pulse">パルス</option>
+                    </select>
+                    <button type="button" class="btn btn-sm btn-primary">検索</button>
+                </div>
+                <div class="search-row">
+                    <label class="search-label">コード</label>
+                    <input type="text" class="form-control form-control-sm search-input" placeholder="コードを入力">
+                </div>
+                <div class="search-row">
+                    <label class="search-label">設備名称</label>
+                    <input type="text" class="form-control form-control-sm search-input" placeholder="設備名称を入力">
+                </div>
+                <div class="search-row">
+                    <label class="search-label">機器名称</label>
+                    <input type="text" class="form-control form-control-sm search-input" placeholder="機器名称を入力">
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered code-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 120px;">コード No.</th>
+                            <th style="width: 200px;">設備名称</th>
+                            <th style="width: 180px;">機器名称</th>
+                            <th style="width: 60px;">単位</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PTC001</td>
+                            <td>変圧 電力量</td>
+                            <td>受電 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC002</td>
+                            <td>変圧電力量</td>
+                            <td>自己電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC003</td>
+                            <td>受電電力量</td>
+                            <td>HKk 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC004</td>
+                            <td>2F 電力量</td>
+                            <td>2F 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC005</td>
+                            <td>25F 電力量</td>
+                            <td>25F 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC006</td>
+                            <td>25F 電力量</td>
+                            <td>25F 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC007</td>
+                            <td>26F 電力量</td>
+                            <td>26F 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC008</td>
+                            <td>25F 電力量</td>
+                            <td>25F 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC009</td>
+                            <td>28F 電力量</td>
+                            <td>28F 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                        <tr>
+                            <td>PTC010</td>
+                            <td>27F 電力量</td>
+                            <td>27F 電力量</td>
+                            <td class="text-center">kW</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Popup Footer -->
+        <div class="popup-footer">
+        </div>
+    </div>
+
+    @@include("partials/vendor-scripts.html")
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+    <script>
+        // Row click to select
+        document.querySelectorAll('.code-table tbody tr').forEach(row => {
+            row.addEventListener('click', function(e) {
+                // Remove selection from other rows
+                document.querySelectorAll('.code-table tbody tr').forEach(r => {
+                    r.style.backgroundColor = '';
+                });
+                // Highlight selected row
+                if (this.style.backgroundColor !== 'rgb(160, 210, 255)') {
+                    this.style.backgroundColor = '#a0d2ff';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
+

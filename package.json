@@ -1,0 +1,39 @@
+{
+  "name": "document-template",
+  "version": "1.0.0",
+  "description": "ドキュメントテンプレート",
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp build",
+    "build:minimal": "gulp build:minimal",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "bootstrap": "^5.3.8",
+    "browser-sync": "^3.0.2",
+    "del": "^6.1.1",
+    "gulp": "^5.0.0",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-file-include": "^2.3.0",
+    "gulp-if": "^3.0.0",
+    "gulp-npm-dist": "^1.0.4",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-rtlcss": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-useref-plus": "^0.0.7",
+    "mermaid": "^11.12.2",
+    "sass": "^1.71.1",
+    "vitepress": "^1.0.0",
+    "vitepress-plugin-mermaid": "^2.0.17"
+  },
+  "dependencies": {
+    "medium-zoom": "^1.1.0"
+  }
+}
