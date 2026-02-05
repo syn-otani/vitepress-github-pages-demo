@@ -2,41 +2,40 @@
 
 ## 概要
 
-VitePressで作成したドキュメントをGitHub Pagesで公開する方法について調査しました。`document_template-main`を参考に、GitLab PagesからGitHub Pagesへの移行手順をまとめています。
+VitePressで作成したドキュメントをGitHub Pagesで公開する方法を、実際の構築手順に基づいて解説します。
+
+**作成したサイト**: https://syn-otani.github.io/vitepress-github-pages-demo/
 
 ## 前提条件
 
 - Node.js 20以上
-- GitHubリポジトリ
+- GitHubアカウント
 - VitePressプロジェクト（`docs/`ディレクトリ構成）
 
 ---
 
-## 設定手順
+## Step 1: GitHubリポジトリの作成
 
-### 1. VitePress設定の修正
+### 1.1 新規リポジトリ作成
 
-`docs/.vitepress/config.mts`の`base`オプションを設定します。
+1. GitHubにログイン
+2. 「**New**」ボタンをクリック
+3. リポジトリ名を入力（例: `vitepress-github-pages-demo`）
+4. 「**Public**」を選択
+5. README、.gitignore、ライセンスは**追加しない**
+6. 「**Create repository**」をクリック
 
-```typescript
-export default {
-  // GitHub Pagesのサブパス配信の場合
-  // https://<username>.github.io/<repository>/
-  base: '/<repository>/',
-  
-  // または、カスタムドメインやルート配信の場合
-  // base: '/',
-}
-```
+![リポジトリ作成画面](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/.system_generated/click_feedback/click_feedback_1770147974064.png)
 
-> [!IMPORTANT]
-> `base`設定はデプロイ先のURL構造に合わせる必要があります。
-> - **サブドメイン配信**（`https://username.github.io/`）→ `base: '/'`
-> - **サブパス配信**（`https://username.github.io/repo-name/`）→ `base: '/repo-name/'`
+### 1.2 作成後の画面
+
+空のリポジトリが作成され、クイックセットアップ手順が表示されます。
+
+![空リポジトリ画面](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_empty_repo_setup_1770148079437.png)
 
 ---
 
-### 2. GitHub Actionsワークフローの作成
+## Step 2: GitHub Actionsワークフローの作成
 
 プロジェクトルートに`.github/workflows/deploy.yml`を作成します。
 
@@ -45,125 +44,171 @@ export default {
 name: Deploy VitePress site to Pages
 
 on:
-  # mainブランチへのプッシュで実行
   push:
     branches: [main]
-  
-  # Actionsタブから手動実行も可能
   workflow_dispatch:
 
-# GitHub Pagesへのデプロイ権限を設定
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 同時デプロイを1つに制限（進行中のデプロイはキャンセルしない）
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  # ビルドジョブ
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
-          fetch-depth: 0 # lastUpdatedを有効にする場合は必要
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build with VitePress
-        run: npm run docs:build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v4
+      - run: npm ci
+      - run: npm run docs:build
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
 
-  # デプロイジョブ
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
     steps:
-      - name: Deploy to GitHub Pages
+      - uses: actions/deploy-pages@v4
         id: deployment
-        uses: actions/deploy-pages@v4
 ```
 
 ---
 
-### 3. GitHubリポジトリの設定
+## Step 3: VitePress base設定の修正
+
+`docs/.vitepress/config.mts`の`base`オプションをリポジトリ名に設定します。
+
+```typescript
+export default {
+  base: '/vitepress-github-pages-demo/',
+  // ...
+}
+```
+
+> [!IMPORTANT]
+> `base`設定はデプロイ先のURL構造に合わせる必要があります。
+> - **ルート配信**（`https://username.github.io/`）→ `base: '/'`
+> - **サブパス配信**（`https://username.github.io/repo-name/`）→ `base: '/repo-name/'`
+
+---
+
+## Step 4: Gitコマンドでプッシュ
+
+```bash
+# リポジトリ初期化
+git init -b main
+
+# ファイルをステージング
+git add .
+
+# コミット
+git commit -m "Initial commit: VitePress documentation with GitHub Pages deployment"
+
+# リモート追加
+git remote add origin https://github.com/<username>/<repository>.git
+
+# プッシュ
+git push -u origin main
+```
+
+---
+
+## Step 5: GitHub Pagesの設定
+
+### 5.1 初回ワークフローの失敗
+
+初回プッシュ後、ワークフローが失敗します。これはPagesの設定がまだ完了していないためです。
+
+![Actions失敗](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_actions_failed_workflow_1770148204321.png)
+
+### 5.2 Pagesのソース設定
 
 1. リポジトリの **Settings** を開く
 2. 左メニューから **Pages** を選択
 3. **Build and deployment > Source** で **GitHub Actions** を選択
 
-![GitHub Pages設定](https://docs.github.com/assets/cb-settings-pages-source.webp)
+![Pages設定](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/.system_generated/click_feedback/click_feedback_1770148225633.png)
+
+### 5.3 ワークフロー再実行
+
+1. リポジトリの **Actions** タブを開く
+2. 失敗したワークフローをクリック
+3. **Re-run jobs** > **Re-run all jobs** をクリック
+
+![Actions進行中](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_actions_in_progress_1770148290742.png)
+
+### 5.4 デプロイ成功
+
+ワークフローが正常に完了すると、サイトが公開されます。
+
+![Actions成功](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_actions_success_1770148353837.png)
 
 ---
 
-### 4. デプロイの実行
+## Step 6: 動作確認
 
-1. 上記の設定をコミットしてmainブランチにプッシュ
-2. GitHub Actionsが自動実行される
-3. 完了後、以下のURLでサイトにアクセス可能：
-   - `https://<username>.github.io/<repository>/`
-   - またはカスタムドメイン
+### 公開URL
 
----
+```
+https://<username>.github.io/<repository>/
+```
 
-## document_template-mainからの移行ポイント
+今回の例: https://syn-otani.github.io/vitepress-github-pages-demo/
 
-### 現在のGitLab CI設定との比較
+### ホームページ
 
-| 項目 | GitLab CI | GitHub Actions |
-|-----|-----------|----------------|
-| 設定ファイル | `.gitlab-ci.yml` | `.github/workflows/deploy.yml` |
-| ビルド出力 | `public`に移動 | `docs/.vitepress/dist`を直接アップロード |
-| Node.js | `node:20` イメージ | `actions/setup-node@v6` |
-| デプロイ先 | GitLab Pages | GitHub Pages |
+![VitePressホームページ](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/vitepress_homepage_1770149059956.png)
 
-### 変更が必要なファイル
+### 調査ドキュメント
 
-1. **新規作成**: `.github/workflows/deploy.yml`
-2. **修正**: `docs/.vitepress/config.mts`の`base`オプション
-3. **削除可能**: `.gitlab-ci.yml`（GitHub移行後）
+ナビゲーションからドキュメントにアクセスできることを確認します。
+
+![調査記事](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/research_article_content_1770149071483.png)
 
 ---
 
-## 注意事項
+## 操作録画
 
-> [!WARNING]
-> **HTML自動圧縮を無効にする**
-> 
-> GitHub PagesやCDNでHTML自動圧縮を有効にすると、Vueのコメントが削除されてハイドレーションエラーが発生する可能性があります。
+構築作業の全工程を録画しました：
+
+### リポジトリ作成
+![リポジトリ作成操作](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_repo_create_1770147570559.webp)
+
+### GitHub Actions設定
+![GitHub Actions設定操作](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_actions_check_1770148191355.webp)
+
+### 公開サイト確認
+![公開サイト確認操作](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_pages_site_1770148382190.webp)
+
+---
+
+## まとめ
+
+| ステップ | 内容 |
+|---------|------|
+| 1 | GitHubで空のPublicリポジトリを作成 |
+| 2 | `.github/workflows/deploy.yml`を作成 |
+| 3 | VitePressの`base`をリポジトリ名に設定 |
+| 4 | コードをGitHubにプッシュ |
+| 5 | Settings > Pagesでソースを「GitHub Actions」に変更 |
+| 6 | ワークフローを再実行してデプロイ完了 |
 
 > [!TIP]
-> **ローカルでの確認**
-> 
-> ビルド後にローカルでプレビューして確認することを推奨します：
-> ```bash
-> npm run docs:build
-> npm run docs:preview
-> # http://localhost:4173 でアクセス
-> ```
+> 初回デプロイ時はPages設定前にワークフローが失敗しますが、設定後に再実行すれば正常にデプロイされます。
 
 ---
 
