@@ -4,7 +4,7 @@
 
 VitePressで作成したドキュメントをGitHub Pagesで公開する方法を、実際の構築手順に基づいて解説します。
 
-**作成したサイト**: https://syn-otani.github.io/vitepress-github-pages-demo/
+**デモサイト**: https://syn-otani.github.io/vitepress-github-pages-demo/
 
 ## 前提条件
 
@@ -16,22 +16,12 @@ VitePressで作成したドキュメントをGitHub Pagesで公開する方法�
 
 ## Step 1: GitHubリポジトリの作成
 
-### 1.1 新規リポジトリ作成
-
 1. GitHubにログイン
 2. 「**New**」ボタンをクリック
 3. リポジトリ名を入力（例: `vitepress-github-pages-demo`）
 4. 「**Public**」を選択
 5. README、.gitignore、ライセンスは**追加しない**
 6. 「**Create repository**」をクリック
-
-![リポジトリ作成画面](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/.system_generated/click_feedback/click_feedback_1770147974064.png)
-
-### 1.2 作成後の画面
-
-空のリポジトリが作成され、クイックセットアップ手順が表示されます。
-
-![空リポジトリ画面](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_empty_repo_setup_1770148079437.png)
 
 ---
 
@@ -40,7 +30,6 @@ VitePressで作成したドキュメントをGitHub Pagesで公開する方法�
 プロジェクトルートに`.github/workflows/deploy.yml`を作成します。
 
 ```yaml
-# VitePressサイトをGitHub Pagesにビルド・デプロイするワークフロー
 name: Deploy VitePress site to Pages
 
 on:
@@ -133,29 +122,17 @@ git push -u origin main
 
 初回プッシュ後、ワークフローが失敗します。これはPagesの設定がまだ完了していないためです。
 
-![Actions失敗](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_actions_failed_workflow_1770148204321.png)
-
 ### 5.2 Pagesのソース設定
 
 1. リポジトリの **Settings** を開く
 2. 左メニューから **Pages** を選択
 3. **Build and deployment > Source** で **GitHub Actions** を選択
 
-![Pages設定](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/.system_generated/click_feedback/click_feedback_1770148225633.png)
-
 ### 5.3 ワークフロー再実行
 
 1. リポジトリの **Actions** タブを開く
 2. 失敗したワークフローをクリック
 3. **Re-run jobs** > **Re-run all jobs** をクリック
-
-![Actions進行中](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_actions_in_progress_1770148290742.png)
-
-### 5.4 デプロイ成功
-
-ワークフローが正常に完了すると、サイトが公開されます。
-
-![Actions成功](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_actions_success_1770148353837.png)
 
 ---
 
@@ -168,31 +145,6 @@ https://<username>.github.io/<repository>/
 ```
 
 今回の例: https://syn-otani.github.io/vitepress-github-pages-demo/
-
-### ホームページ
-
-![VitePressホームページ](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/vitepress_homepage_1770149059956.png)
-
-### 調査ドキュメント
-
-ナビゲーションからドキュメントにアクセスできることを確認します。
-
-![調査記事](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/research_article_content_1770149071483.png)
-
----
-
-## 操作録画
-
-構築作業の全工程を録画しました：
-
-### リポジトリ作成
-![リポジトリ作成操作](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_repo_create_1770147570559.webp)
-
-### GitHub Actions設定
-![GitHub Actions設定操作](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_actions_check_1770148191355.webp)
-
-### 公開サイト確認
-![公開サイト確認操作](/Users/otanitakehiro/.gemini/antigravity/brain/2d48dc44-6bb2-4f60-8ed1-efc3cb646243/github_pages_site_1770148382190.webp)
 
 ---
 
